@@ -10,3 +10,8 @@ class TeacherInsertDataForm(forms.ModelForm):
     class Meta:
         model = Teacher_data_insert
         fields = ["name", "Teacher_ID", "Mail", "Password"]
+
+class StudentLoginForm(forms.ModelForm):
+    class Meta:
+        model = Student_data_insert
+        fields = ["RollNo", "Password"]

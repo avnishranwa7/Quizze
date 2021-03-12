@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- <script>
+			setTimeout(function(){
+			  if ($('#msg').length > 0) {
+				$('#msg').remove();
+			  }
+			}, 2000)
+		  </script>  -->
+		<meta charset="utf-8">
+		<title>Student Sign In</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- LINEARICONS -->
+		<link rel="stylesheet" href="{% static 'templates/student_sign_in/fonts/linearicons/style.css' %}">
+		
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="{% static 'templates/student_sign_in/css/style.css' %}">
+	</head>
+
+	<body>
+		<!-- 
+		<div class="alert alert-success m-2" id="msg" role="alert" style=" font-size: larger;  color:#a94442;background-color:#f2dede;border-color:#ebccd1; height: 40px; padding-top: 10px;
+		border-radius: 5px;">Invalid RollNo/Password !!</div>
+		 -->
+		<div class="wrapper">
+			
+			<div class="inner">
+				
+				<form action="#" method="POST">
+					{% csrf_token %}
+					<h3>STUDENT SIGN IN</h3>
+					<div class="form-holder">
+						<span class="lnr lnr-license"></span>
+						<input type="text" class="form-control" placeholder="Roll Number" name="RollNo">
+					</div>
+					<div class="form-holder">
+						<span class="lnr lnr-lock"></span>
+						<input type="password" class="form-control" placeholder="Password" name="Password">
+					</div>
+					{% for message in messages %}
+					<p style="color: red;">{{message}}</p>
+					{% endfor %}
+					<button>
+						<span>Sign In</span>
+					</button>
+				</form>
+				
+				<img src="{% static 'templates/student_sign_in/images/image-2.png' %}" alt="" class="image-2">
+			</div>
+			
+		</div>
+		
+		<script src="{% static 'templates/student_sign_in/js/jquery-3.3.1.min.js' %}"></script>
+		<script src="{% static 'templates/student_sign_in/js/main.js' %}"></script>
+		
+	</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

@@ -1,7 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from Quiz.models import Student_data_insert
 from django.contrib import messages
-from .forms import StudentInsertDataForm, TeacherInsertDataForm
+from .forms import StudentInsertDataForm, TeacherInsertDataForm, StudentLoginForm
+from django.core.exceptions import ObjectDoesNotExist
+from .models import Student_data_insert
+from django.contrib.auth import authenticate, login, logout
+import mysql.connector
+
+def Home(request):
+    return render(request, "welcome.html")
 
 def StudentInsertData(request):
     form = StudentInsertDataForm(request.POST or None)
@@ -18,3 +25,33 @@ def TeacherInsertData(request):
 
     context = {'DataForm': TeacherInsertDataForm}
     return render(request, "teacher\\teacher_register.html", context)
+
+def Student_login(request):
+    if request.user.is_authenticated:
+        return redirect('Home')
+    else:
+        if request.method=='POST':
+            RollNo = request.POST.get('RollNo')
+            Password = request.POST.get('Password')
+            mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="0000",
+            database="sakila"
+            )
+            
+            mycursor = mydb.cursor()
+
+            mycursor.execute("SELECT RollNo, Password FROM students WHERE RollNO = '"+RollNo+"' and Password = '" + Password + "'")
+            
+            myresult = mycursor.fetchall()
+
+            if len(myresult) == 0:
+                messages.error(request, "Invalid Username/Password")
+                return redirect('student_sign_in')
+            else:
+                return redirect('Home')
+
+        context = {}
+        return render(request, "student_sign_in\student_signin.html", context)
+    
