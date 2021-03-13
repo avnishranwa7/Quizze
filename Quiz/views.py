@@ -6,6 +6,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from .models import Student_data_insert
 from django.contrib.auth import authenticate, login, logout
 import mysql.connector
+from django.contrib.auth.models import Group
+from django.contrib.auth.models import User
 
 def Home(request):
     return render(request, "welcome.html")
@@ -20,6 +22,11 @@ def StudentInsertData(request):
 
 def TeacherInsertData(request):
     form = TeacherInsertDataForm(request.POST or None)
+    if form.is_valid():
+        user = User.objects.create_user(form.cleaned_data['Teacher_ID'], form.cleaned_data['Mail'], form.cleaned_data['Password'], is_staff = True)
+        user.save()
+        teacher = Group.objects.get(name='Teachers') 
+        teacher.user_set.add(user)
     if form.is_valid():
         form.save()
 
