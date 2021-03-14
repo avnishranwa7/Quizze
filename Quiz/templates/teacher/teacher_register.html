@@ -39,8 +39,11 @@
 					</div>
 					<div class="form-holder">
 						<span class="lnr lnr-lock"></span>
-						<input type="password" class="form-control" placeholder="Confirm Password" required>
+						<input type="password" class="form-control" placeholder="Confirm Password" name="ConfirmPassword" required>
 					</div>
+					{% for message in messages %}
+					<p style="color: red;">{{message}}</p>
+					{% endfor %}
 					<button>
 						<span>Register</span>
 					</button>
