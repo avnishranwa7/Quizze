@@ -18,29 +18,32 @@
 		<div class="wrapper">
 			<div class="inner">
 				<img src="{% static 'templates/student/images/image-3.png' %}" alt="" class="image-1" height="200px", width="300px">
-				<form action="#" method="POST">
+				<form action="#" method="POST" onSubmit = "return checkPassword(this)">
 					{% csrf_token %}
 					<h3>New Student?</h3>
 					<div class="form-holder">
 						<span class="lnr lnr-user"></span>
-						<input type="text" class="form-control" placeholder="Name" name="name">
+						<input type="text" class="form-control" placeholder="Name" name="name" required>
 					</div>
 					<div class="form-holder">
 						<span class="lnr lnr-license"></span>
-						<input type="text" class="form-control" placeholder="Roll Number" name="RollNo">
+						<input type="text" class="form-control" placeholder="Roll Number" name="RollNo" required>
 					</div>
 					<div class="form-holder">
 						<span class="lnr lnr-envelope"></span>
-						<input type="text" class="form-control" placeholder="Mail" name="Mail">
+						<input type="text" class="form-control" placeholder="Mail" name="Mail" required>
 					</div>
 					<div class="form-holder">
 						<span class="lnr lnr-lock"></span>
-						<input type="password" class="form-control" placeholder="Password" name="Password">
+						<input type="password" class="form-control" placeholder="Password" name="Password" required>
 					</div>
 					<div class="form-holder">
 						<span class="lnr lnr-lock"></span>
-						<input type="password" class="form-control" placeholder="Confirm Password">
+						<input type="password" class="form-control" placeholder="Confirm Password" name = "ConfirmPassword" required>
 					</div>
+					{% for message in messages %}
+					<p style="color: red;">{{message}}</p>
+					{% endfor %}
 					<button>
 						<span>Register</span>
 					</button>

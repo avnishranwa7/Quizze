@@ -5,7 +5,7 @@ class StudentInsertDataForm(forms.ModelForm):
     class Meta:
         model = Student_data_insert
         fields = ["name", "RollNo", "Mail", "Password"]
-
+    
 class TeacherInsertDataForm(forms.ModelForm):
     class Meta:
         model = Teacher_data_insert

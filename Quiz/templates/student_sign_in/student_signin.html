@@ -34,11 +34,11 @@
 					<h3>STUDENT SIGN IN</h3>
 					<div class="form-holder">
 						<span class="lnr lnr-license"></span>
-						<input type="text" class="form-control" placeholder="Roll Number" name="RollNo">
+						<input type="text" class="form-control" placeholder="Roll Number" name="RollNo" required>
 					</div>
 					<div class="form-holder">
 						<span class="lnr lnr-lock"></span>
-						<input type="password" class="form-control" placeholder="Password" name="Password">
+						<input type="password" class="form-control" placeholder="Password" name="Password" required>
 					</div>
 					{% for message in messages %}
 					<p style="color: red;">{{message}}</p>

@@ -14,8 +14,30 @@ def Home(request):
 
 def StudentInsertData(request):
     form = StudentInsertDataForm(request.POST or None)
-    if form.is_valid():
-        form.save()
+    pass1 = request.POST.get('Password')
+    pass2 = request.POST.get('ConfirmPassword')
+    if(pass1!=pass2):
+        messages.error(request, "Password did not match!")
+    else:
+        if request.method=='POST':
+            RollNo = str(request.POST.get('RollNo'))
+            mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="0000",
+            database="sakila"
+            )
+                                
+            mycursor = mydb.cursor()
+
+            mycursor.execute("SELECT RollNo FROM students")
+                                
+            myresult = mycursor.fetchall()
+            if (RollNo,) in myresult:
+                messages.error(request, "Roll Number already exists!")
+            else:
+                if form.is_valid():
+                    form.save()
 
     context = {'DataForm': StudentInsertDataForm}
     return render(request, "student\\student_register.html", context)
@@ -55,7 +77,6 @@ def Student_login(request):
 
             if len(myresult) == 0:
                 messages.error(request, "Invalid Username/Password")
-                return redirect('student_sign_in')
             else:
                 return redirect('Home')
 
