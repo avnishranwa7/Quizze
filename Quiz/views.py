@@ -91,30 +91,27 @@ def TeacherInsertData(request):
     return render(request, "teacher\\teacher_register.html", context)
 
 def Student_login(request):
-    if request.user.is_authenticated:
-        return redirect('Home')
-    else:
-        if request.method=='POST':
-            RollNo = request.POST.get('RollNo')
-            Password = request.POST.get('Password')
-            mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="0000",
-            database="sakila"
-            )
+    if request.method=='POST':
+        RollNo = request.POST.get('RollNo')
+        Password = request.POST.get('Password')
+        mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="0000",
+        database="sakila"
+        )
             
-            mycursor = mydb.cursor()
+        mycursor = mydb.cursor()
 
-            mycursor.execute("SELECT RollNo, Password FROM students WHERE RollNO = '"+RollNo+"' and Password = '" + Password + "'")
+        mycursor.execute("SELECT RollNo, Password FROM students WHERE RollNO = '"+RollNo+"' and Password = '" + Password + "'")
             
-            myresult = mycursor.fetchall()
+        myresult = mycursor.fetchall()
 
-            if len(myresult) == 0:
-                messages.error(request, "Invalid Username/Password")
-            else:
-                return redirect('Home')
+        if len(myresult) == 0:
+            messages.error(request, "Invalid Username/Password")
+        else:
+            return redirect('Home')
 
-        context = {}
-        return render(request, "student_sign_in\student_signin.html", context)
+    context = {}
+    return render(request, "student_sign_in\student_signin.html", context)
     

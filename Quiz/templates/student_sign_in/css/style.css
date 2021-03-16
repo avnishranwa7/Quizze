@@ -47,8 +47,8 @@ a {
 
 .image-1 {
   position: absolute;
-  bottom: 200px;
-  left: -300px;
+  bottom: 20px;
+  left: -3px;
   z-index: 99; }
 
 .image-2 {
