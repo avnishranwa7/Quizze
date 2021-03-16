@@ -45,9 +45,9 @@ def StudentInsertData(request):
                 else:
                     if form.is_valid():
                         form.save()
-
+                        return redirect(Student_login)
     context = {'DataForm': StudentInsertDataForm}
-    return render(request, "student\\student_register.html", context)
+    return render(request, "student\student_register.html", context)
 
 def TeacherInsertData(request):
     form = TeacherInsertDataForm(request.POST or None)
