@@ -9,8 +9,12 @@ import mysql.connector
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 
+
 def Home(request):
     return render(request, "welcome.html")
+
+def Admin(request):
+    return render(request, 'Admin')
 
 def StudentInsertData(request):
     form = StudentInsertDataForm(request.POST or None)
@@ -86,6 +90,8 @@ def TeacherInsertData(request):
                         teacher = Group.objects.get(name='Teachers') 
                         teacher.user_set.add(user)
                         form.save()
+                        return redirect(Admin)
+                        
 
     context = {'DataForm': TeacherInsertDataForm}
     return render(request, "teacher\\teacher_register.html", context)
