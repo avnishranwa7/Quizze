@@ -53,4 +53,26 @@ class Quiz(models.Model):
         verbose_name = "Quizze"
 
     def __str__(self):
-        return self.quiz_name
+        return str(self.quiz_id)
+
+class Questions(models.Model):
+    choices = [
+        ('A', 'A'),
+        ('B', 'B'),
+        ('C', 'C'),
+        ('D', 'D'),
+    ]
+    q_id = models.AutoField(primary_key = True)
+    quiz_id = models.ForeignKey(Quiz, on_delete = models.CASCADE, db_column = 'quiz_id', null=False)
+    question = models.CharField(max_length = 500, null=False)
+    opt1 = models.CharField(max_length = 100, null=False)
+    opt2 = models.CharField(max_length = 100, null=False)
+    opt3 = models.CharField(max_length = 100, null=False)
+    opt4 = models.CharField(max_length = 100, null=False)
+    ans = models.CharField(max_length = 1, null=False, choices = choices)
+    class Meta:
+        db_table = "Questions"
+        verbose_name = "Question"
+
+    def __str__(self):
+        return self.question
