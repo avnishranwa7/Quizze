@@ -3,7 +3,7 @@ from Quiz.models import Student_data_insert
 from django.contrib import messages
 from .forms import StudentInsertDataForm, TeacherInsertDataForm, StudentLoginForm
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Student_data_insert
+from .models import Student_data_insert, enrolled
 from django.contrib.auth import authenticate, login, logout
 import mysql.connector
 from django.contrib.auth.models import Group
@@ -12,6 +12,25 @@ from django.contrib.auth.models import User
 
 def Home(request):
     return render(request, "welcome.html")
+
+def Courses(request, rollno):
+    if request.method=='POST':
+        RollNo = request.POST.get('RollNo')
+        Password = request.POST.get('Password')
+        mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="0000",
+        database="sakila"
+        )
+            
+        mycursor = mydb.cursor()
+
+        mycursor.execute("SELECT Course_ID FROM enrolled WHERE RollNO = '"+RollNo+"'")
+        myresult = mycursor.fetchall()
+    course = enrolled.objects.all().filter(RollNo = rollno)
+    con = {'course': course}
+    return render(request, "student_courses\courses.html", con)
 
 def Admin(request):
     return render(request, 'Admin')
@@ -116,7 +135,7 @@ def Student_login(request):
         if len(myresult) == 0:
             messages.error(request, "Invalid Username/Password")
         else:
-            return redirect('Home')
+            return redirect('http://127.0.0.1:8000/courses/'+RollNo)
 
     context = {}
     return render(request, "student_sign_in\student_signin.html", context)

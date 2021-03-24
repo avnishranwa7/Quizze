@@ -8,4 +8,5 @@ urlpatterns = [
     path('teacher_register/', views.TeacherInsertData),
     path('student_signin/', views.Student_login, name="student_sign_in"),
     path('admin/', views.Admin, name="Admin"),
+    path('courses/<str:rollno>', views.Courses, name='Courses'),
 ]
