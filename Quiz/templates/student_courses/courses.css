@@ -21,9 +21,11 @@
 }
 
 .second{
-    background-color: darkslategray;
+    background-color: #accffe;
     color: white;
     font-size: 25px;
     padding-left: 15px;
     margin-top: 10px;
+    display: inline;
 }
+

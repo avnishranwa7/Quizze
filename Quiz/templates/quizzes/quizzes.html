@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <title>My Courses</title>
+        <title>My Quizzes</title>
         <style>
           .btn {
               border: 2px solid black;
@@ -37,7 +37,7 @@
             <p>THE WORLD'S FAVOURITE QUIZ SITE</p>
         </div>
         <div class='second'>
-            <div>Welcome: {{student_obj.name}}</div>
+            <div>My Quizzes</div>
             <!-- My Courses -->
         </div>
         <ins><h1 style="color:darkslategray; padding-left: 110px; font-family:Georgia, 'Times New Roman', Times, serif">My Courses</h1></ins>
@@ -53,7 +53,7 @@
                 <div id="collapse{{forloop.counter}}" class="panel-collapse collapse in">
                   <div class="panel-body" style="font-size: 18px;">
                     {{i.Course_ID.Course_Name}}
-                    <button class = "btn success" onclick="location.href = 'http://127.0.0.1:8000/quizzes/{{i.Course_ID}}/{{student_obj.RollNo}}' ">Show Quiz</button>
+                    <button class = "btn success">Show Quiz</button>
                   </div>
                 </div>
               </div>

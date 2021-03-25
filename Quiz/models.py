@@ -25,9 +25,8 @@ class Course(models.Model):
     class Meta:
         db_table = "Courses"
         
-
     def __str__(self):
-        return self.Course_ID
+        return "{}".format(self.Course_ID)
 
 class enrolled(models.Model):
     id = models.AutoField(primary_key = True)

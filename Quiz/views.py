@@ -3,7 +3,7 @@ from Quiz.models import Student_data_insert
 from django.contrib import messages
 from .forms import StudentInsertDataForm, TeacherInsertDataForm, StudentLoginForm
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Student_data_insert, enrolled
+from .models import Student_data_insert, enrolled, Course, Quiz
 from django.contrib.auth import authenticate, login, logout
 import mysql.connector
 from django.contrib.auth.models import Group
@@ -14,23 +14,15 @@ def Home(request):
     return render(request, "welcome.html")
 
 def Courses(request, rollno):
-    if request.method=='POST':
-        RollNo = request.POST.get('RollNo')
-        Password = request.POST.get('Password')
-        mydb = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="0000",
-        database="sakila"
-        )
-            
-        mycursor = mydb.cursor()
-
-        mycursor.execute("SELECT Course_ID FROM enrolled WHERE RollNO = '"+RollNo+"'")
-        myresult = mycursor.fetchall()
     course = enrolled.objects.all().filter(RollNo = rollno)
-    con = {'course': course}
+    student_obj = Student_data_insert.objects.all().filter(RollNo = rollno).first()
+    con = {'course': course, 'student_obj': student_obj}
     return render(request, "student_courses\courses.html", con)
+
+def Quizzes(request, Course_ID, rollno):
+    quiz = Quiz.objects.all().filter(Course_ID = Course_ID)
+    con = {'quiz': quiz}
+    return render(request, "quizzes\quizzes.html", con)
 
 def Admin(request):
     return render(request, 'Admin')
