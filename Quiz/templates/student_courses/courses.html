@@ -2,38 +2,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="{% static 'templates/student_courses/courses.css' %}">
+        <link rel="stylesheet" href="{% static 'templates/student_courses/css/courses.css' %}">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <title>My Courses</title>
-        <style>
-          .btn {
-              border: 2px solid black;
-              border-radius: 5px;
-              background-color: white;
-              color: black;
-              padding: 10px 20px;
-              font-size: 14px;
-              cursor: pointer;
-              float: right;
-            }
-
-          .success {
-              border-color: #4CAF50;
-              color: green;
-            }
-            
-          .success:hover {
-              background-color: #4CAF50;
-              color: white;
-            }
-        </style>
     </head>
     <body>
         {% csrf_token %}
-        <div class='first' style="color: darkslategray;">
-            <h1 id = "q" style="color: darkslategray;">Quizze</h1>
+        <div class='first'>
+            <h1>Quizze</h1>
             <p>THE WORLD'S FAVOURITE QUIZ SITE</p>
         </div>
         <div class='second'>

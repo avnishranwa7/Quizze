@@ -2,58 +2,44 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="{% static 'templates/student_courses/courses.css' %}">
+        <link rel="stylesheet" href="{% static 'templates/quizzes/css/quizzes.css' %}"> 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <title>My Quizzes</title>
-        <style>
-          .btn {
-              border: 2px solid black;
-              border-radius: 5px;
-              background-color: white;
-              color: black;
-              padding: 10px 20px;
-              font-size: 14px;
-              cursor: pointer;
-              float: right;
-            }
-
-          .success {
-              border-color: #4CAF50;
-              color: green;
-            }
-            
-          .success:hover {
-              background-color: #4CAF50;
-              color: white;
-            }
-        </style>
     </head>
     <body>
         {% csrf_token %}
         <div class='first' style="color: darkslategray;">
-            <h1 id = "q" style="color: darkslategray;">Quizze</h1>
+            <h1 style="color: darkslategray;">Quizze</h1>
             <p>THE WORLD'S FAVOURITE QUIZ SITE</p>
         </div>
         <div class='second'>
-            <div>My Quizzes</div>
-            <!-- My Courses -->
+            <div style="color: white;">My Quizzes</div>
         </div>
-        <ins><h1 style="color:darkslategray; padding-left: 110px; font-family:Georgia, 'Times New Roman', Times, serif">My Courses</h1></ins>
-        {% for i in course %}
+        {% for i in quiz %}
         <div class="container" style = "padding-top: 10px;">
             <div class="panel-group" id="accordion">
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{forloop.counter}}">{{i.Course_ID}}</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{forloop.counter}}">Quiz ID: {{i.quiz_id}}</a>
                   </h4>
                 </div>
                 <div id="collapse{{forloop.counter}}" class="panel-collapse collapse in">
                   <div class="panel-body" style="font-size: 18px;">
-                    {{i.Course_ID.Course_Name}}
-                    <button class = "btn success">Show Quiz</button>
+                    Quiz Name: {{i.quiz_name}}
+                    <br>
+                    Course: {{i.Course_ID.Course_Name}}
+                    <br>
+                    Date: {{i.date}}
+                    <br>
+                    Start Time: {{i.start_time}}
+                    <br>
+                    End Time: {{i.end_time}}
+                    <br>
+                    Duration: {{i.duration}}
+                    <button class = "btn success">Take Quiz</button>
                   </div>
                 </div>
               </div>
