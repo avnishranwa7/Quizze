@@ -17,29 +17,35 @@
         <div class='second'>
             <div style="color: white;">My Quizzes</div>
         </div>
-        {% for i in quiz %}
+        {% for i in bool %}
         <div class="container" style = "padding-top: 10px;">
             <div class="panel-group" id="accordion">
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{forloop.counter}}">Quiz ID: {{i.quiz_id}}</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{forloop.counter}}">Quiz ID: {{i.0.quiz_id}}</a>
                   </h4>
                 </div>
                 <div id="collapse{{forloop.counter}}" class="panel-collapse collapse in">
                   <div class="panel-body" style="font-size: 18px;">
-                    Quiz Name: {{i.quiz_name}}
+                    Quiz Name: {{i.0.quiz_name}}
                     <br>
-                    Course: {{i.Course_ID.Course_Name}}
+                    Course: {{i.0.Course_ID.Course_Name}}
                     <br>
-                    Date: {{i.date}}
+                    Date: {{i.0.date}}
                     <br>
-                    Start Time: {{i.start_time}}
+                    Available: {{i.0.start_time}} - {{i.0.end_time}}
                     <br>
-                    End Time: {{i.end_time}}
-                    <br>
-                    Duration: {{i.duration}}
+                    Duration: {{i.0.duration}}
+                    {% ifequal i.1 'active' %}
                     <button class = "btn success">Take Quiz</button>
+                    {% endifequal %}
+                    {% ifequal i.1 'locked' %}
+                    <button class = "btn success">Quiz Locked</button>
+                    {% endifequal %}
+                    {% ifequal i.1 'over' %}
+                    <button class = "btn success">Check Result</button>
+                    {% endifequal %}
                   </div>
                 </div>
               </div>

@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 import mysql.connector
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
-
+import datetime
 
 def Home(request):
     return render(request, "welcome.html")
@@ -21,7 +21,17 @@ def Courses(request, rollno):
 
 def Quizzes(request, Course_ID, rollno):
     quiz = Quiz.objects.all().filter(Course_ID = Course_ID)
-    con = {'quiz': quiz}
+    bool_list = []
+    for i in quiz:
+        if datetime.datetime.combine(i.date, i.start_time) <= datetime.datetime.now():
+            if datetime.datetime.combine(i.date, i.end_time) > datetime.datetime.now():
+                bool_list.append((i, "active"))
+            else:
+                bool_list.append((i, "over"))
+        else:
+            bool_list.append((i, "locked"))
+    con = {'bool': bool_list}
+    print(bool_list)
     return render(request, "quizzes\quizzes.html", con)
 
 def Admin(request):
