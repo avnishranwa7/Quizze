@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
-from Quiz.models import Student_data_insert
 from django.contrib import messages
 from .forms import StudentInsertDataForm, TeacherInsertDataForm, StudentLoginForm
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Student_data_insert, enrolled, Course, Quiz
+from .models import Student_data_insert, enrolled, Course, Quiz, Questions
 from django.contrib.auth import authenticate, login, logout
 import mysql.connector
 from django.contrib.auth.models import Group
@@ -30,9 +29,15 @@ def Quizzes(request, Course_ID, rollno):
                 bool_list.append((i, "over"))
         else:
             bool_list.append((i, "locked"))
-    con = {'bool': bool_list}
+    con = {'bool': bool_list, 'rollno': rollno}
     print(bool_list)
     return render(request, "quizzes\quizzes.html", con)
+
+def Question(request, quiz_id, rollno):
+    ques = Questions.objects.all().filter(quiz_id = quiz_id)
+    quiz_obj = Quiz.objects.get(quiz_id = quiz_id)
+    con = {'ques': ques, 'rollno': rollno, 'quiz_obj': quiz_obj}
+    return render(request, "questions\questions.html", con)
 
 def Admin(request):
     return render(request, 'Admin')

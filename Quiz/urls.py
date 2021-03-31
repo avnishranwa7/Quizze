@@ -10,4 +10,5 @@ urlpatterns = [
     path('admin/', views.Admin, name="Admin"),
     path('courses/<str:rollno>', views.Courses, name='Courses'),
     path('quizzes/<str:Course_ID>/<str:rollno>', views.Quizzes),
+    path('questions/<str:quiz_id>/<str:rollno>', views.Question),
 ]
