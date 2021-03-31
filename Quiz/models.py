@@ -1,3 +1,4 @@
+#A
 from django.db import models
 
 class Student_data_insert(models.Model):
