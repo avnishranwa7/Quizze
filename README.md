@@ -1,3 +1,3 @@
 # Quizzie (Quiz Portal)
-## [Description](./blob/main/Description) 
-## [ER Model](./blob/main/ER%20Model.png)
+## [Description](https://github.com/avnishranwa7/Quiz/blob/main/Description) 
+## [ER Model](https://github.com/avnishranwa7/Quiz/blob/main/ER%20Model.png)
