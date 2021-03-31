@@ -1,2 +1,2 @@
 # Quizzie (Quiz Portal)
-## [Description](Description.md) 
+## [Description](https://github.com/avnishranwa7/Quiz/blob/main/Description) 
