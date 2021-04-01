@@ -1,0 +1,31 @@
+ER Diagram Description :
+-	If the teacher and student have an existing account then they can login otherwise they can register themselves and create their account.
+-	The users will have to setup their username and password.
+-	The teacher enrolls the student to their respective sources.
+-	The teacher can create quizzes and link it to their courses.
+-	Every quiz will have its unique ID.
+-	The students enrolled in a course can view details of upcoming and previous quizzes.
+-	Questions of a quiz will have unique ID.
+-	The students response to each question of a quiz can be uniquely identified by the students rollno and the questions id.
+
+Entities and Attributes : 
+-	Students Entity : Attributes are rollno, sname, email, password.
+	              : rollno acts as the primary key.
+
+-	Courses Entity : Attributes are course_id, course_name.
+	            : course_id acts as the primary key.
+
+-	Teachers Entity : Attributes are teacher_id, tname, email, password.
+	              : teacher_id acts as the primary key.
+
+-	Quizzes Entity : Attributes are quiz_id, course_id, duration, date, start_time, end_time.
+	            : quiz_id acts as the primary key.
+
+-	Questions Entity : Attributes are q_id, quiz_id, question, ans, opt1, opt2, opt3, opt4.
+	                : q_id acts as the primary key.
+
+-	Responses Entity : Attributes are rollno, q_id, response, quiz_id.
+		   : rollno and q_id together act as a composite primary key.
+
+-	Results Entity : Attributes are rollno, course_id, quiz_id, marks.
+	           : rollno acts as the primary key.
