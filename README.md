@@ -34,7 +34,7 @@ Entities and Attributes :
 		   : rollno and q_id together act as a composite primary key.
 -	Results Entity : Attributes are rollno, course_id, quiz_id, marks.
 	           : rollno acts as the primary key.
-## [ER Model](https://github.com/avnishranwa7/Quiz/blob/main/ER%20Model.png)
+## [ER Model](https://github.com/avnishranwa7/Quiz/blob/main/Relational%20Schema.jpeg)
 ## [Relational Schema](https://github.com/avnishranwa7/Quiz/blob/main/Relational%20Schema.jpeg)
 ## [Technologies Used](https://github.com/avnishranwa7/Quiz/blob/main/Technologies%20Used)
 - Front-End: HTML, CSS, Django Template Language
