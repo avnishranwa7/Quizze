@@ -35,6 +35,7 @@ Entities and Attributes :
 -	Results Entity : Attributes are rollno, course_id, quiz_id, marks.
 	           : rollno acts as the primary key.
 ## [ER Model](https://github.com/avnishranwa7/Quiz/blob/main/ER%20Model.png)
+![alt text](https://github.com/avnishranwa7/Quiz/blob/main/ER%20Model.png)
 ## [Relational Schema](https://github.com/avnishranwa7/Quiz/blob/main/Relational%20Schema.jpeg)
 ![alt text](https://github.com/avnishranwa7/Quiz/blob/main/Relational%20Schema.jpeg)
 ## [Technologies Used](https://github.com/avnishranwa7/Quiz/blob/main/Technologies%20Used)
