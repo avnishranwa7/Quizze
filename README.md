@@ -20,7 +20,8 @@ ER Diagram Description :
 -	The students response to each question of a quiz can be uniquely identified by the students rollno and the questions id.
 
 Entities and Attributes : 
--	Students Entity - Attributes are rollno, sname, email, password.
+-	Students Entity 
+-		- Attributes are rollno, sname, email, password.
 	              	- rollno acts as the primary key.
 -	Courses Entity : Attributes are course_id, course_name.
 	            : course_id acts as the primary key.
