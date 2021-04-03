@@ -23,18 +23,24 @@ Entities and Attributes :
 - Students Entity 
   - Attributes are rollno, sname, email, password.
   - rollno acts as the primary key.
--	Courses Entity : Attributes are course_id, course_name.
-	            : course_id acts as the primary key.
--	Teachers Entity : Attributes are teacher_id, tname, email, password.
-	              : teacher_id acts as the primary key.
--	Quizzes Entity : Attributes are quiz_id, course_id, duration, date, start_time, end_time.
-	            : quiz_id acts as the primary key.
--	Questions Entity : Attributes are q_id, quiz_id, question, ans, opt1, opt2, opt3, opt4.
-	                : q_id acts as the primary key.
--	Responses Entity : Attributes are rollno, q_id, response, quiz_id.
-		   : rollno and q_id together act as a composite primary key.
--	Results Entity : Attributes are rollno, course_id, quiz_id, marks.
-	           : rollno acts as the primary key.
+- Courses Entity 
+  - Attributes are course_id, course_name.
+  - course_id acts as the primary key.
+- Teachers Entity
+  - Attributes are teacher_id, tname, email, password.
+  - teacher_id acts as the primary key.
+- Quizzes Entity
+  - Attributes are quiz_id, course_id, duration, date, start_time, end_time.
+  - quiz_id acts as the primary key.
+- Questions Entity
+  - Attributes are q_id, quiz_id, question, ans, opt1, opt2, opt3, opt4.
+  - q_id acts as the primary key.
+- Responses Entity 
+  - Attributes are rollno, q_id, response, quiz_id.
+  - rollno and q_id together act as a composite primary key.
+- Results Entity 
+  - Attributes are rollno, course_id, quiz_id, marks.
+  - rollno acts as the primary key.
 ## [ER Model](https://github.com/avnishranwa7/Quiz/blob/main/ER%20Model.png)
 ![alt text](https://github.com/avnishranwa7/Quiz/blob/main/ER%20Model.png)
 ## [Relational Schema](https://github.com/avnishranwa7/Quiz/blob/main/Relational%20Schema.jpeg)
