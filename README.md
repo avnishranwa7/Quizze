@@ -43,8 +43,8 @@ Entities and Attributes :
   - RollNo and quiz_id together act as a composite primary key.
 ## [ER Model](https://github.com/avnishranwa7/Quiz/blob/main/ER%20Model.png)
 ![alt text](https://github.com/avnishranwa7/Quiz/blob/main/ER%20Model.png)
-## [Relational Schema](https://github.com/avnishranwa7/Quiz/blob/main/Relational%20Schema.jpeg)
-![alt text](https://github.com/avnishranwa7/Quiz/blob/main/Relational%20Schema.jpeg)
+## [Relational Schema](https://github.com/avnishranwa7/Quiz/blob/main/Relational%20Schema.jpg)
+![alt text](https://github.com/avnishranwa7/Quiz/blob/main/Relational%20Schema.jpg)
 ## [Technologies Used](https://github.com/avnishranwa7/Quiz/blob/main/Technologies%20Used)
 - Front-End : HTML, CSS, Django Template Language
 - Back-End : Django
