@@ -39,15 +39,15 @@ def Quizzes(request, Course_ID, rollno):
 def TestView(request, quiz_id, rollno):
     ques = Questions.objects.all().filter(quiz_id = quiz_id)
     quiz_obj = Quiz.objects.get(quiz_id = quiz_id)
+    l = len(ques)
     s = Student_data_insert.objects.get(pk = rollno)
     # s = Student_data_insert.objects.get(pk = rollno)
-    QuestionFormSet = modelformset_factory(responses, fields=('response',), extra=3)
+    QuestionFormSet = modelformset_factory(responses, fields=('response',), extra = l)
     
     
     if request.method=='POST':
         form = QuestionFormSet(request.POST, queryset = Student_data_insert.objects.filter(RollNo = rollno))
         if form.is_valid():
-            print(s.RollNo,"sdb")
             instances = form.save(commit = False)
             for instance,q in zip(instances, ques):
                 instance.RollNo = s
@@ -56,7 +56,7 @@ def TestView(request, quiz_id, rollno):
                 instance.save()
             return redirect('http://127.0.0.1:8000/quizzes/{}/{}'.format(temp.q_id.quiz_id.Course_ID, rollno))
 
-        print(form.errors)
+        
     form = QuestionFormSet()
     return render(request, 'test.html', {'form_ques': zip(list(form), list(ques)), 'form': form, 'quiz_obj': quiz_obj})
 
