@@ -1,4 +1,6 @@
 from django.db import models
+from composite_field import CompositeField
+
 
 class Student_data_insert(models.Model):
     name = models.CharField(max_length = 20, null=False)
@@ -66,8 +68,8 @@ class Questions(models.Model):
     question = models.CharField(max_length = 500, null=False)
     opt1 = models.CharField(max_length = 100, null=False)
     opt2 = models.CharField(max_length = 100, null=False)
-    opt3 = models.CharField(max_length = 100, null=False)
-    opt4 = models.CharField(max_length = 100, null=False)
+    opt3 = models.CharField(max_length = 100, null=True, blank = True)
+    opt4 = models.CharField(max_length = 100, null=True, blank = True)
     ans = models.CharField(max_length = 1, null=False, choices = choices)
     class Meta:
         db_table = "Questions"
@@ -75,3 +77,14 @@ class Questions(models.Model):
 
     def __str__(self):
         return self.question
+
+
+class responses(models.Model):
+    id = models.AutoField(primary_key = True)
+    RollNo = models.ForeignKey(Student_data_insert, on_delete = models.CASCADE, db_column = 'RollNo', null=False)
+    q_id = models.ForeignKey(Questions, on_delete = models.CASCADE, db_column = 'q_id', null=False)
+    response = models.CharField(max_length = 1, null=False)
+    class Meta:
+        db_table = "responses"
+        verbose_name = "Response"
+        unique_together = ('RollNo', 'q_id',)

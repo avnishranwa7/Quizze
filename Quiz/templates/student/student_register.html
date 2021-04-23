@@ -18,7 +18,7 @@
 		<div class="wrapper">
 			<div class="inner">
 				<img src="{% static 'templates/student/images/image-3.png' %}" alt="" class="image-1" height="200px", width="300px">
-				<form action="#" method="POST" onSubmit = "return checkPassword(this)">
+				<form action="#" method="POST">
 					{% csrf_token %}
 					<h3>New Student?</h3>
 					<div class="form-holder">

@@ -6,6 +6,7 @@ label.radio {
     cursor: pointer
 }
 
+
 label.radio input {
     position: absolute;
     top: 0;
@@ -13,6 +14,7 @@ label.radio input {
     visibility: hidden;
     pointer-events: none
 }
+
 
 label.radio span {
     padding: 4px 0px;

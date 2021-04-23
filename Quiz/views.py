@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import StudentInsertDataForm, TeacherInsertDataForm, StudentLoginForm
+from .forms import StudentInsertDataForm, TeacherInsertDataForm, StudentLoginForm, QuestionForm, TestForm
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Student_data_insert, enrolled, Course, Quiz, Questions
+from .models import Student_data_insert, enrolled, Course, Quiz, Questions, responses
 from django.contrib.auth import authenticate, login, logout
 import mysql.connector
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
+from django.forms import formset_factory, inlineformset_factory, modelformset_factory
+from json import dumps
+import simplejson
 import datetime
 
 def Home(request):
@@ -33,11 +36,53 @@ def Quizzes(request, Course_ID, rollno):
     print(bool_list)
     return render(request, "quizzes\quizzes.html", con)
 
+def TestView(request, quiz_id, rollno):
+    ques = Questions.objects.all().filter(quiz_id = quiz_id)
+    quiz_obj = Quiz.objects.get(quiz_id = quiz_id)
+    s = Student_data_insert.objects.get(pk = rollno)
+    # s = Student_data_insert.objects.get(pk = rollno)
+    QuestionFormSet = modelformset_factory(responses, fields=('response',), extra=3)
+    
+    
+    if request.method=='POST':
+        form = QuestionFormSet(request.POST, queryset = Student_data_insert.objects.filter(RollNo = rollno))
+        if form.is_valid():
+            print(s.RollNo,"sdb")
+            instances = form.save(commit = False)
+            for instance,q in zip(instances, ques):
+                instance.RollNo = s
+                instance.q_id = q
+                temp = instance
+                instance.save()
+            return redirect('http://127.0.0.1:8000/quizzes/{}/{}'.format(temp.q_id.quiz_id.Course_ID, rollno))
+
+        print(form.errors)
+    form = QuestionFormSet()
+    return render(request, 'test.html', {'form_ques': zip(list(form), list(ques)), 'form': form, 'quiz_obj': quiz_obj})
+
 def Question(request, quiz_id, rollno):
     ques = Questions.objects.all().filter(quiz_id = quiz_id)
     quiz_obj = Quiz.objects.get(quiz_id = quiz_id)
-    con = {'ques': ques, 'rollno': rollno, 'quiz_obj': quiz_obj}
-    return render(request, "questions\questions.html", con)
+    s = Student_data_insert.objects.get(pk = rollno)
+    # s = Student_data_insert.objects.get(pk = rollno)
+    QuestionFormSet = modelformset_factory(responses, fields=('response',), extra=3)
+    
+    
+    if request.method=='POST':
+        form = QuestionFormSet(request.POST, queryset = Student_data_insert.objects.filter(RollNo = rollno))
+        if form.is_valid():
+            print(s.RollNo,"sdb")
+            instances = form.save(commit = False)
+            for instance,q in zip(instances, ques):
+                instance.RollNo = s
+                instance.q_id = q
+                temp = instance
+                instance.save()
+            return redirect('http://127.0.0.1:8000/test/{}/{}'.format(temp.q_id.quiz_id.Course_ID, rollno))
+
+        print(form.errors)
+    form = QuestionFormSet()
+    return render(request, 'test.html', {'form_ques': zip(list(form), list(ques)), 'form': form, 'quiz_obj': quiz_obj})
 
 def Admin(request):
     return render(request, 'Admin')

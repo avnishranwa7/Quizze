@@ -38,13 +38,13 @@
                     <br>
                     Duration: {{i.0.duration}}
                     {% ifequal i.1 'active' %}
-                    <button class = "btn success" onclick="location.href = 'http://127.0.0.1:8000/questions/{{i.0.quiz_id}}/{{rollno}}' ">Take Quiz</button>
+                    <button class = "btn success" onclick="location.href = 'http://127.0.0.1:8000/test/{{rollno}}/{{i.0.quiz_id}}' ">Take Quiz</button>
                     {% endifequal %}
                     {% ifequal i.1 'locked' %}
                     <button class = "btn success">Quiz Locked</button>
                     {% endifequal %}
                     {% ifequal i.1 'over' %}
-                    <button class = "btn success" onclick="location.href = 'http://127.0.0.1:8000/questions/{{i.0.quiz_id}}/{{rollno}}' ">Check Result</button>
+                    <button class = "btn success" onclick="location.href = 'http://127.0.0.1:8000/test/{{rollno}}/{{i.0.quiz_id}}' ">Check Result</button>
                     {% endifequal %}
                   </div>
                 </div>

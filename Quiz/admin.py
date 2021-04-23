@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, enrolled, Student_data_insert, Quiz, Questions
+from .models import Course, enrolled, Student_data_insert, Quiz, Questions, responses
 from django.contrib.admin import ModelAdmin
 # Register your models here.
 
@@ -24,7 +24,9 @@ class QuestionAdmin(admin.ModelAdmin):
         ('quiz_id', admin.RelatedOnlyFieldListFilter),
     )
 
+
 admin.site.register(Course)
 admin.site.register(enrolled, EnrolledAdmin)
 admin.site.register(Quiz, QuizAdmin)
 admin.site.register(Questions, QuestionAdmin)
+admin.site.register(responses)
