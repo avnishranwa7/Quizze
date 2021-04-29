@@ -1,0 +1,121 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'templates/quizzes/css/quizzes.css' %}"> 
+        <link rel="stylesheet" href="{% static 'templates/questions/css/questions.css' %}"> 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        
+    </head>
+    <body>
+        <div class='first' style="color: darkslategray;">
+            <h1 style="color: darkslategray;">{{quiz_obj.quiz_name}}</h1>
+        </div>
+        <div class='second'>
+            <div style="color: white;">Question Responses</div>
+        </div>
+        
+        <div class="container mt-5">
+            <div class="d-flex justify-content-center row">
+                <div class="col-md-10 col-lg-10">
+                    <div class="border">
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="d-flex flex-row justify-content-between align-items-center mcq">
+                                <h2 style="color: darkslategrey; padding-left: 25vw;"><strong>Marks: {{marks}}</strong></h2>
+                            </div>
+                        </div>
+                        <form>
+                            
+                        {% csrf_token %}
+                        {% for q,r in ques %}
+                        <!-- <div class="d-flex flex-row align-items-center question-title">
+                            <h3 style="color: darkslategray;">Q{{forloop.counter}}.&nbsp;</h3>
+                            <h3 style="color: darkslategray;">{{i.question}}</h5>
+                        </div> -->
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="d-flex flex-row align-items-center question-title">
+                                <h3 style="color: darkslategray;">Q{{forloop.counter}}.&nbsp;</h3>
+                                <h3 style="color: darkslategray;">{{q.question}}</h5>
+                            </div>
+                            {% if q.ans == 'A' %}
+                            <div class="ans ml-2">
+                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw; background-color: rgb(16, 236, 27);">{{q.opt1}}</span>
+                                </label>
+                            </div>
+                            {% elif r == 'A' %}
+                            <div class="ans ml-2">
+                                <label class="radio"> <span style="color: white;width: 100%; text-align: left; padding-left: 0.5vw; background-color: rgb(216, 70, 13);">{{q.opt1}}</span>
+                                </label>
+                            </div>
+                            {% else %}
+                            <div class="ans ml-2">
+                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{q.opt1}}</span>
+                                </label>
+                            </div>
+                            {% endif %}
+                            {% if q.ans == 'B' %}
+                            <div class="ans ml-2">
+                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw; background-color: rgb(16, 236, 27);">{{q.opt2}}</span>
+                                </label>
+                            </div>
+                            {% elif r == 'B' %}
+                            <div class="ans ml-2">
+                                <label class="radio"> <span style="color: white;width: 100%; text-align: left; padding-left: 0.5vw; background-color: rgb(216, 70, 13);">{{q.opt2}}</span>
+                                </label>
+                            </div>
+                            {% else %}
+                            <div class="ans ml-2">
+                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{q.opt2}}</span>
+                                </label>
+                            </div>
+                            {% endif %}
+                            
+                            {% if q.opt3 %}
+                            {% if q.ans == 'C' %}
+                            <div class="ans ml-2">
+                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw; background-color: rgb(16, 236, 27);">{{q.opt3}}</span>
+                                </label>
+                            </div>
+                            {% elif r == 'C' %}
+                            <div class="ans ml-2">
+                                <label class="radio"> <span style="color: white;width: 100%; text-align: left; padding-left: 0.5vw; background-color: rgb(216, 70, 13);">{{q.opt3}}</span>
+                                </label>
+                            </div>
+                            {% else %}
+                            <div class="ans ml-2">
+                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{q.opt3}}</span>
+                                </label>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            {% if q.opt4 %}
+                            {% if q.ans == 'D' %}
+                            <div class="ans ml-2">
+                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw; background-color: rgb(16, 236, 27);">{{q.opt4}}</span>
+                                </label>
+                            </div>
+                            {% elif r == 'D' %}
+                            <div class="ans ml-2">
+                                <label class="radio"> <span style="color: white;width: 100%; text-align: left; padding-left: 0.5vw; background-color: rgb(216, 70, 13);">{{q.opt4}}</span>
+                                </label>
+                            </div>
+                            {% else %}
+                            <div class="ans ml-2">
+                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{q.opt4}}</span>
+                                </label>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                        </div>
+
+                        {% endfor %}
+                        
+                        
+                        </form>
+    </body>
+</html>

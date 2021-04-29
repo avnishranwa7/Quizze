@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import StudentInsertDataForm, TeacherInsertDataForm, StudentLoginForm, QuestionForm, TestForm
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Student_data_insert, enrolled, Course, Quiz, Questions, responses
+from .models import Student_data_insert, enrolled, Course, Quiz, Questions, responses, marks_db, test
 from django.contrib.auth import authenticate, login, logout
 import mysql.connector
 from django.contrib.auth.models import Group
@@ -33,8 +33,10 @@ def Quizzes(request, Course_ID, rollno):
         else:
             bool_list.append((i, "locked"))
     con = {'bool': bool_list, 'rollno': rollno}
-    print(bool_list)
     return render(request, "quizzes\quizzes.html", con)
+
+def Add_Data(RollNo, q_id, response):
+    responses.objects.create(RollNo = RollNo, q_id = q_id, response = response)
 
 def TestView(request, quiz_id, rollno):
     ques = Questions.objects.all().filter(quiz_id = quiz_id)
@@ -42,23 +44,38 @@ def TestView(request, quiz_id, rollno):
     l = len(ques)
     s = Student_data_insert.objects.get(pk = rollno)
     # s = Student_data_insert.objects.get(pk = rollno)
-    QuestionFormSet = modelformset_factory(responses, fields=('response',), extra = l)
-    
-    
+    QuestionFormSet = modelformset_factory(test, fields=('response',), can_delete = True, extra = l)
     if request.method=='POST':
         form = QuestionFormSet(request.POST, queryset = Student_data_insert.objects.filter(RollNo = rollno))
         if form.is_valid():
             instances = form.save(commit = False)
+            mark = 0
             for instance,q in zip(instances, ques):
+                if instance.response == q.ans:
+                    mark += 1
                 instance.RollNo = s
                 instance.q_id = q
                 temp = instance
                 instance.save()
+                Add_Data(s, q, instance.response)
+            for instance in instances:
+                instance.delete()
+                
+            marks_object = marks_db.objects.create(RollNo = s, quiz_id = quiz_obj, marks = mark)
             return redirect('http://127.0.0.1:8000/quizzes/{}/{}'.format(temp.q_id.quiz_id.Course_ID, rollno))
 
         
     form = QuestionFormSet()
     return render(request, 'test.html', {'form_ques': zip(list(form), list(ques)), 'form': form, 'quiz_obj': quiz_obj})
+
+def results(request, rollno, quiz_id):
+    marks_obj = marks_db.objects.all().filter(RollNo = rollno).first()
+    ques = Questions.objects.all().filter(quiz_id = quiz_id)
+    response_list = []
+    for i in ques:
+        response_list.append(responses.objects.all().filter(RollNo = rollno, q_id = i.q_id).first().response)
+    quiz_obj = Quiz.objects.get(quiz_id = quiz_id)
+    return render(request, 'results.html', {'quiz_obj': quiz_obj, 'marks':marks_obj.marks, 'ques': zip(ques, response_list)})
 
 def Question(request, quiz_id, rollno):
     ques = Questions.objects.all().filter(quiz_id = quiz_id)
@@ -71,7 +88,6 @@ def Question(request, quiz_id, rollno):
     if request.method=='POST':
         form = QuestionFormSet(request.POST, queryset = Student_data_insert.objects.filter(RollNo = rollno))
         if form.is_valid():
-            print(s.RollNo,"sdb")
             instances = form.save(commit = False)
             for instance,q in zip(instances, ques):
                 instance.RollNo = s

@@ -54,7 +54,7 @@ class Quiz(models.Model):
         verbose_name = "Quizze"
 
     def __str__(self):
-        return str(self.quiz_id)
+        return str(self.quiz_name)
 
 class Questions(models.Model):
     choices = [
@@ -88,3 +88,26 @@ class responses(models.Model):
         db_table = "responses"
         verbose_name = "Response"
         unique_together = ('RollNo', 'q_id',)
+    
+    def __str__(self):
+        return str(self.RollNo)
+
+class marks_db(models.Model):
+    id = models.AutoField(primary_key = True)
+    RollNo = models.ForeignKey(Student_data_insert, on_delete = models.CASCADE, db_column = 'RollNo', null=False)
+    quiz_id = models.ForeignKey(Quiz, on_delete = models.CASCADE, db_column = 'quiz_id', null=False)
+    marks = models.IntegerField()
+    class Meta:
+        db_table = "results"
+        unique_together = ('RollNo', 'quiz_id',)
+        verbose_name = 'Result'
+
+class test(models.Model):
+    id = models.AutoField(primary_key = True)
+    RollNo = models.ForeignKey(Student_data_insert, on_delete = models.CASCADE, db_column = 'RollNo', null=False)
+    q_id = models.ForeignKey(Questions, on_delete = models.CASCADE, db_column = 'q_id', null=False)
+    response = models.CharField(max_length = 1, null=False)
+    class Meta:
+        db_table = "test"
+        unique_together = ('RollNo', 'q_id',)
+    

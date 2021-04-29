@@ -26,3 +26,6 @@ class TestForm(forms.ModelForm):
     class Meta:
         model = responses
         fields = ('response', )
+
+# class Mark(forms.ModelForm):
+#     class Meta:
