@@ -69,7 +69,7 @@ def TestView(request, quiz_id, rollno):
     return render(request, 'test.html', {'form_ques': zip(list(form), list(ques)), 'form': form, 'quiz_obj': quiz_obj})
 
 def results(request, rollno, quiz_id):
-    marks_obj = marks_db.objects.all().filter(RollNo = rollno).first()
+    marks_obj = marks_db.objects.all().filter(RollNo = rollno, quiz_id=quiz_id).first()
     ques = Questions.objects.all().filter(quiz_id = quiz_id)
     response_list = []
     for i in ques:
