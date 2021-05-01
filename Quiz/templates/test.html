@@ -16,6 +16,59 @@
                 document.getElementById(x).value = value;
             }
         </script>
+        
+        <script>
+                window.onbeforeunload = closingCode;
+                function closingCode(){
+                document.getElementById("submit").click();
+                return null; //<-- this prevents the dialog confirm box
+}
+        </script>
+        
+        <script>
+            // Set the date we're counting down to
+            var countDownDate = new Date();
+            var time = new Date();
+            // var advance_time = new Date();
+            var duration = {{duration|safe}};
+            countDownDate.setTime(time.getTime() + (duration * 60 * 1000));
+            countDownDate = countDownDate.getTime();
+            // advance_time.setMinutes(time.getMinutes() + duration);
+            // console.log(advance_time);
+            // console.log(countDownDate);
+            // Update the count down every 1 second
+            var x = setInterval(function() {
+            
+              // Get today's date and time
+              var now = new Date().getTime();
+                
+              // Find the distance between now and the count down date
+              var distance = countDownDate - now;
+                
+              // Time calculations for days, hours, minutes and seconds
+              var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+              var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+              var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                if(hours.toString().length==1){
+                    hours = '0'+hours;
+                }
+                if(minutes.toString().length===1){
+                    minutes = '0'+minutes;
+                }
+                if(seconds.toString().length===1){
+                    seconds = '0'+seconds;
+                }
+              // Output the result in an element with id="demo"
+              document.getElementById("demo").innerHTML = hours + ":"
+              + minutes + ":" + seconds;
+                
+              // If the count down is over, write some text 
+              if (distance <= 0) {
+                clearInterval(x);
+                document.getElementById("submit").click();
+              }
+            }, 1000);
+            </script>
         <style>
             label.radio input:hover+span {
                 border-color: darkslategray;
@@ -25,6 +78,7 @@
         </style>
     </head>
     <body>
+        <!-- <input type="text" id="time" value="16" name="time"> -->
         <div class='first' style="color: darkslategray;">
             <h1 style="color: darkslategray;">{{quiz_obj.quiz_name}}</h1>
             <p>ALL THE BEST</p>
@@ -32,16 +86,18 @@
         <div class='second'>
             <div style="color: white;">Questions</div>
         </div>
-        
-        <div class="container mt-5">
+        <div style="font-size: 50px; display: inline-block; width: 15vw; height: 10vh; position: fixed; border: 3px solid darkslategray;
+        border-radius: 10px; outline-offset: 30px;">
+        <p id="demo"></p></div>
+        <div class="container mt-5" style="display: inline-block; margin-left: 9vw;">
             <div class="d-flex justify-content-center row">
                 <div class="col-md-10 col-lg-10">
                     <div class="border">
-                        <div class="question bg-white p-3 border-bottom">
+                        <!-- <div class="question bg-white p-3 border-bottom">
                             <div class="d-flex flex-row justify-content-between align-items-center mcq">
                                 <h4>MCQ Quiz</h4>
                             </div>
-                        </div>
+                        </div> -->
                         <form method="POST">
                             
                         {% csrf_token %}
@@ -95,7 +151,7 @@
                         
                         {% endfor %}
                         
-                        <button type="submit" class="btn btn-primary btn-sm" style="margin-right: 27vw; background-color: darkslategray; width: 7vw; font-size: medium;">Submit</button>
+                        <button id="submit" type="submit" class="btn btn-primary btn-sm" style="margin-right: 29vw; background-color: darkslategray; width: 7vw; font-size: medium;">Submit</button>
                         
                         <br>
                         </form>

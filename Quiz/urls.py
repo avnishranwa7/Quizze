@@ -3,7 +3,7 @@ from django.urls import path
 from Quiz import views
 
 urlpatterns = [
-    path('', views.Home, name="Home"),
+    path('', views.homepage, name="Home"),
     path('test/<str:rollno>/<str:quiz_id>', views.TestView),
     path('student_register/', views.StudentInsertData),
     path('teacher_register/', views.TeacherInsertData),
@@ -11,6 +11,9 @@ urlpatterns = [
     path('admin/', views.Admin, name="Admin"),
     path('courses/<str:rollno>', views.Courses, name='Courses'),
     path('quizzes/<str:Course_ID>/<str:rollno>', views.Quizzes),
-    path('result/<str:rollno>/<str:quiz_id>', views.results)
+    path('result/<str:rollno>/<str:quiz_id>', views.results),
+    path('hello', views.log),
+    path('home', views.homepage),
+    path('signup', views.signup)
     # path('questions/<str:quiz_id>/<str:rollno>', views.Question),
 ]

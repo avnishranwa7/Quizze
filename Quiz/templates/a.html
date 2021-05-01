@@ -1,0 +1,15 @@
+<html>
+    <head>
+        
+            <script>
+                window.onbeforeunload = closingCode;
+                function closingCode(){
+                document.getElementById("form").submit();
+                return null; //<-- this prevents the dialog confirm box
+}
+            </script>
+    </head>
+    <body>
+        <input type="button" class="btn btn-secondary" value="Take This Test" onclick="openPopup()" />
+    </body>
+</html>

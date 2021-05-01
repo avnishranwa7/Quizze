@@ -7,6 +7,13 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <title>My Quizzes</title>
+        
+        <script type="text/javascript">
+          window.history.forward();
+          function noBack() {
+              window.history.forward();
+          }
+      </script>
     </head>
     <body>
         {% csrf_token %}
@@ -38,7 +45,7 @@
                     <br>
                     Duration: {{i.0.duration}}
                     {% ifequal i.1 'active' %}
-                    <button class = "btn success" onclick="location.href = 'http://127.0.0.1:8000/test/{{rollno}}/{{i.0.quiz_id}}' ">Take Quiz</button>
+                    <button class = "btn success"  onclick="location.href = 'http://127.0.0.1:8000/test/{{rollno}}/{{i.0.quiz_id}}' ">Take Quiz</button>
                     {% endifequal %}
                     {% ifequal i.1 'locked' %}
                     <button class = "btn success">Quiz Locked</button>

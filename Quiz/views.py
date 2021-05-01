@@ -9,8 +9,37 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.forms import formset_factory, inlineformset_factory, modelformset_factory
 from json import dumps
-import simplejson
+import json
 import datetime
+
+def signup(request):
+    return render(request, 'Signup_v1\signup.html')
+
+def homepage(request):
+    return render(request, 'home\home.html')
+
+def log(request):
+    if request.method=='POST':
+        RollNo = request.POST.get('rollno')
+        Password = request.POST.get('pass')
+        mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="0000",
+        database="sakila"
+        )
+            
+        mycursor = mydb.cursor()
+
+        mycursor.execute("SELECT RollNo, Password FROM students WHERE RollNO = '"+RollNo+"' and Password = '" + Password + "'")
+            
+        myresult = mycursor.fetchall()
+
+        if len(myresult) == 0:
+            messages.error(request, "Invalid Username/Password")
+        else:
+            return redirect('http://127.0.0.1:8000/courses/'+RollNo)
+    return render(request, "Login_v1\index.html")
 
 def Home(request):
     return render(request, "welcome.html")
@@ -24,10 +53,25 @@ def Courses(request, rollno):
 def Quizzes(request, Course_ID, rollno):
     quiz = Quiz.objects.all().filter(Course_ID = Course_ID)
     bool_list = []
+    
+    mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="0000",
+    database="sakila"
+    )
+            
+    mycursor = mydb.cursor()
+
     for i in quiz:
+        mycursor.execute("SELECT * FROM results WHERE RollNO = '"+rollno+"' and quiz_id = '" + str(i.quiz_id) + "'")
+        myresult = mycursor.fetchall()
         if datetime.datetime.combine(i.date, i.start_time) <= datetime.datetime.now():
             if datetime.datetime.combine(i.date, i.end_time) > datetime.datetime.now():
-                bool_list.append((i, "active"))
+                if len(myresult):
+                    bool_list.append((i, "locked"))
+                else:
+                    bool_list.append((i, "active"))
             else:
                 bool_list.append((i, "over"))
         else:
@@ -55,18 +99,18 @@ def TestView(request, quiz_id, rollno):
                     mark += 1
                 instance.RollNo = s
                 instance.q_id = q
-                temp = instance
                 instance.save()
                 Add_Data(s, q, instance.response)
             for instance in instances:
                 instance.delete()
                 
             marks_object = marks_db.objects.create(RollNo = s, quiz_id = quiz_obj, marks = mark)
-            return redirect('http://127.0.0.1:8000/quizzes/{}/{}'.format(temp.q_id.quiz_id.Course_ID, rollno))
+            return redirect('http://127.0.0.1:8000/quizzes/{}/{}'.format(quiz_obj.Course_ID, rollno))
 
         
     form = QuestionFormSet()
-    return render(request, 'test.html', {'form_ques': zip(list(form), list(ques)), 'form': form, 'quiz_obj': quiz_obj})
+    return render(request, 'test.html', {'form_ques': zip(list(form), list(ques)), 'form': form, 'quiz_obj': quiz_obj, 
+    'duration': json.dumps(quiz_obj.duration)})
 
 def results(request, rollno, quiz_id):
     marks_obj = marks_db.objects.all().filter(RollNo = rollno, quiz_id=quiz_id).first()
