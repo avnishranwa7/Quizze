@@ -20,7 +20,7 @@ def signup(request):
 def homepage(request):
     return render(request, 'home\home.html')
 
-def log(request):
+def Studentlogin(request):
     if request.method=='POST':
         RollNo = request.POST.get('rollno')
         Password = request.POST.get('pass')
@@ -197,8 +197,8 @@ def TeacherInsertData(request):
         messages.error(request, "Password did not match!")
     else:
         if request.method=='POST':
-            Teacher_ID = str(request.POST.get('Teacher_ID'))
-            Mail = str(request.POST.get('Mail'))
+            Teacher_ID = str(request.POST.get('teacher_id'))
+            Mail = str(request.POST.get('email'))
             mydb = mysql.connector.connect(
             host="localhost",
             user="root",
@@ -221,7 +221,7 @@ def TeacherInsertData(request):
                     messages.error(request, "Mail already taken!")
                 else:
                     if form.is_valid():
-                        user = User.objects.create_user(form.cleaned_data['Teacher_ID'], form.cleaned_data['Mail'], form.cleaned_data['Password'], is_staff = True)
+                        user = User.objects.create_user(form.cleaned_data['teacher_id'], form.cleaned_data['email'], form.cleaned_data['password'], is_staff = True)
                         user.save()
                         teacher = Group.objects.get(name='Teachers') 
                         teacher.user_set.add(user)
@@ -230,30 +230,7 @@ def TeacherInsertData(request):
                         
 
     context = {'DataForm': TeacherInsertDataForm}
-    return render(request, "teacher\\teacher_register.html", context)
+    return render(request, "Teacher_signup\\teacher_signup.html", context)
 
-def Student_login(request):
-    if request.method=='POST':
-        RollNo = request.POST.get('RollNo')
-        Password = request.POST.get('Password')
-        mydb = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="0000",
-        database="sakila"
-        )
-            
-        mycursor = mydb.cursor()
 
-        mycursor.execute("SELECT RollNo, Password FROM students WHERE RollNO = '"+RollNo+"' and Password = '" + Password + "'")
-            
-        myresult = mycursor.fetchall()
-
-        if len(myresult) == 0:
-            messages.error(request, "Invalid Username/Password")
-        else:
-            return redirect('http://127.0.0.1:8000/courses/'+RollNo)
-
-    context = {}
-    return render(request, "student_sign_in\student_signin.html", context)
     
