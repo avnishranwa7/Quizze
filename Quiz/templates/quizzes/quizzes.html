@@ -14,6 +14,36 @@
               window.history.forward();
           }
       </script>
+      <!-- <script>
+        endtime = function(end_time){
+            // console.log(typeof(endtime));
+            // var countDownDate = new Date();
+            // var time = new Date();
+            // countDownDate.setTime(time.getTime() + (duration * 60 * 1000));
+            // countDownDate = countDownDate.getTime();
+            console.log(end_time);
+            // return countDownDate;
+        }
+      </script> -->
+      <script>
+        endtime = function(duration, end_time, date){
+          var countDownDate = new Date();
+          var time = new Date();
+          countDownDate.setTime(time.getTime() + (duration * 60 * 1000));
+          countDownDate = countDownDate.getTime();
+          var l = end_time.length;
+          var x = end_time.slice(l-4, l);
+          var empty = '';
+          if(x=='a.m.'){
+            end_time = end_time.slice(0, l-4) + 'am';
+          }
+          else{
+            end_time = end_time.slice(0, l-4) + 'pm';
+          }
+          var newdate = new Date(date+' '+end_time);
+          return Math.min(newdate, countDownDate);
+        }
+      </script>
     </head>
     <body>
         {% csrf_token %}
@@ -45,13 +75,13 @@
                     <br>
                     Duration: {{i.0.duration}}
                     {% ifequal i.1 'active' %}
-                    <button class = "btn success"  onclick="location.href = 'http://127.0.0.1:8000/test/{{rollno}}/{{i.0.quiz_id}}' ">Take Quiz</button>
+                    <button class = "btn success"  onclick="location.href = 'http://127.0.0.1:8000/test/{{rollno}}/{{i.0.quiz_id}}/'+endtime({{i.0.duration}},'{{i.0.end_time}}', '{{i.0.date}}') ">Take Quiz</button>
                     {% endifequal %}
                     {% ifequal i.1 'locked' %}
                     <button class = "btn success">Quiz Locked</button>
                     {% endifequal %}
                     {% ifequal i.1 'over' %}
-                    <button class = "btn success" onclick="location.href = 'http://127.0.0.1:8000/result/{{rollno}}/{{i.0.quiz_id}}' ">Check Result</button>
+                    <button class = "btn success" onclick="location.href = 'http://127.0.0.1:8000/result/{{rollno}}/{{i.0.quiz_id}}'">Check Result</button>
                     {% endifequal %}
                   </div>
                 </div>

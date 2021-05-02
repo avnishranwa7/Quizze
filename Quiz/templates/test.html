@@ -27,12 +27,8 @@
         
         <script>
             // Set the date we're counting down to
-            var countDownDate = new Date();
-            var time = new Date();
-            // var advance_time = new Date();
-            var duration = {{duration|safe}};
-            countDownDate.setTime(time.getTime() + (duration * 60 * 1000));
-            countDownDate = countDownDate.getTime();
+            
+            countDownDate = {{time|safe}};
             // advance_time.setMinutes(time.getMinutes() + duration);
             // console.log(advance_time);
             // console.log(countDownDate);

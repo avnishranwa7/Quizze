@@ -53,7 +53,6 @@ def Courses(request, rollno):
 def Quizzes(request, Course_ID, rollno):
     quiz = Quiz.objects.all().filter(Course_ID = Course_ID)
     bool_list = []
-    
     mydb = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -76,13 +75,14 @@ def Quizzes(request, Course_ID, rollno):
                 bool_list.append((i, "over"))
         else:
             bool_list.append((i, "locked"))
+        
     con = {'bool': bool_list, 'rollno': rollno}
     return render(request, "quizzes\quizzes.html", con)
 
 def Add_Data(RollNo, q_id, response):
     responses.objects.create(RollNo = RollNo, q_id = q_id, response = response)
 
-def TestView(request, quiz_id, rollno):
+def TestView(request, quiz_id, rollno, time):
     ques = Questions.objects.all().filter(quiz_id = quiz_id)
     quiz_obj = Quiz.objects.get(quiz_id = quiz_id)
     l = len(ques)
@@ -110,7 +110,7 @@ def TestView(request, quiz_id, rollno):
         
     form = QuestionFormSet()
     return render(request, 'test.html', {'form_ques': zip(list(form), list(ques)), 'form': form, 'quiz_obj': quiz_obj, 
-    'duration': json.dumps(quiz_obj.duration)})
+    'time': json.dumps(time)})
 
 def results(request, rollno, quiz_id):
     marks_obj = marks_db.objects.all().filter(RollNo = rollno, quiz_id=quiz_id).first()
