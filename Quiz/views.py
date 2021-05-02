@@ -11,6 +11,8 @@ from django.forms import formset_factory, inlineformset_factory, modelformset_fa
 from json import dumps
 import json
 import datetime
+from django.http import HttpResponse
+
 
 def signup(request):
     return render(request, 'Signup_v1\signup.html')
@@ -119,7 +121,10 @@ def results(request, rollno, quiz_id):
     for i in ques:
         response_list.append(responses.objects.all().filter(RollNo = rollno, q_id = i.q_id).first().response)
     quiz_obj = Quiz.objects.get(quiz_id = quiz_id)
-    return render(request, 'results.html', {'quiz_obj': quiz_obj, 'marks':marks_obj.marks, 'ques': zip(ques, response_list)})
+    if marks_obj:
+        return render(request, 'results.html', {'quiz_obj': quiz_obj, 'marks':marks_obj.marks, 'ques': zip(ques, response_list), 'course': quiz_obj.Course_ID, 'rollno': rollno})
+    else:
+        return render(request, 'error\error.html', {'course': quiz_obj.Course_ID, 'rollno': rollno})
 
 def Question(request, quiz_id, rollno):
     ques = Questions.objects.all().filter(quiz_id = quiz_id)

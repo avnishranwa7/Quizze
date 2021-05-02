@@ -14,6 +14,6 @@ urlpatterns = [
     path('result/<str:rollno>/<str:quiz_id>', views.results),
     path('hello', views.log),
     path('home', views.homepage),
-    path('signup', views.signup)
+    path('signup', views.signup),
     # path('questions/<str:quiz_id>/<str:rollno>', views.Question),
 ]
