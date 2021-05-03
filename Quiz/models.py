@@ -3,7 +3,7 @@ from composite_field import CompositeField
 
 
 class Student_data_insert(models.Model):
-    name = models.CharField(max_length = 20, null=False)
+    name = models.CharField(max_length = 30, null=False)
     RollNo = models.CharField(primary_key = True, max_length = 20)
     Mail = models.CharField(max_length = 30, null=False)
     Password = models.CharField(max_length = 20, null=False)
@@ -101,6 +101,8 @@ class marks_db(models.Model):
         db_table = "results"
         unique_together = ('RollNo', 'quiz_id',)
         verbose_name = 'Result'
+    def __str__(self):
+        return (str(self.RollNo)+ ': '+ str(self.marks))
 
 class test(models.Model):
     id = models.AutoField(primary_key = True)

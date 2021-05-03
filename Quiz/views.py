@@ -14,8 +14,6 @@ import datetime
 from django.http import HttpResponse
 
 
-def signup(request):
-    return render(request, 'Signup_v1\signup.html')
 
 def homepage(request):
     return render(request, 'home\home.html')
@@ -49,7 +47,7 @@ def Home(request):
 def Courses(request, rollno):
     course = enrolled.objects.all().filter(RollNo = rollno)
     student_obj = Student_data_insert.objects.all().filter(RollNo = rollno).first()
-    con = {'course': course, 'student_obj': student_obj}
+    con = {'course': course, 'student_obj': student_obj, 'rollno': rollno}
     return render(request, "student_courses\courses.html", con)
 
 def Quizzes(request, Course_ID, rollno):
@@ -155,7 +153,7 @@ def Admin(request):
 def StudentInsertData(request):
     form = StudentInsertDataForm(request.POST or None)
     pass1 = request.POST.get('Password')
-    pass2 = request.POST.get('ConfirmPassword')
+    pass2 = request.POST.get('confirmpass')
     if(pass1!=pass2):
         messages.error(request, "Password did not match!")
     else:
@@ -167,8 +165,7 @@ def StudentInsertData(request):
             user="root",
             password="0000",
             database="sakila"
-            )
-                                
+            )                  
             mycursor = mydb.cursor()
 
             mycursor.execute("SELECT RollNo FROM students")
@@ -185,20 +182,20 @@ def StudentInsertData(request):
                 else:
                     if form.is_valid():
                         form.save()
-                        return redirect(Student_login)
+                        return redirect(Studentlogin)
     context = {'DataForm': StudentInsertDataForm}
-    return render(request, "student\student_register.html", context)
+    return render(request, "Signup_v1\signup.html", context)
 
 def TeacherInsertData(request):
     form = TeacherInsertDataForm(request.POST or None)
     pass1 = request.POST.get('Password')
-    pass2 = request.POST.get('ConfirmPassword')
+    pass2 = request.POST.get('confirmpass')
     if(pass1!=pass2):
         messages.error(request, "Password did not match!")
     else:
         if request.method=='POST':
-            Teacher_ID = str(request.POST.get('teacher_id'))
-            Mail = str(request.POST.get('email'))
+            Teacher_ID = str(request.POST.get('Teacher_ID'))
+            Mail = str(request.POST.get('Mail'))
             mydb = mysql.connector.connect(
             host="localhost",
             user="root",
@@ -221,7 +218,7 @@ def TeacherInsertData(request):
                     messages.error(request, "Mail already taken!")
                 else:
                     if form.is_valid():
-                        user = User.objects.create_user(form.cleaned_data['teacher_id'], form.cleaned_data['email'], form.cleaned_data['password'], is_staff = True)
+                        user = User.objects.create_user(form.cleaned_data['Teacher_ID'], form.cleaned_data['Mail'], form.cleaned_data['Password'], is_staff = True)
                         user.save()
                         teacher = Group.objects.get(name='Teachers') 
                         teacher.user_set.add(user)

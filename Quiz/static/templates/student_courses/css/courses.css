@@ -30,6 +30,19 @@ body{
     color: white;
 }
 
+.second div{
+    display: inline;
+    overflow: hidden;
+}
+
+.second p{
+    display: inline;
+}
+
+.second button{
+    display: inline;
+}
+
 .btn {
     border: 2px solid !important;
     border-radius: 5px;

@@ -7,15 +7,23 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <title>My Courses</title>
+        <style>
+          a:hover{
+            text-decoration:none;
+          }
+        </style>
     </head>
     <body>
         {% csrf_token %}
         <div class='first'>
-            <h1>Quizze</h1>
+          <a href = 'http://127.0.0.1:8000/courses/{{rollno}}'><h1 style="color: darkslategray;">Quizze</h1></a>
             <p>THE WORLD'S FAVOURITE QUIZ SITE</p>
         </div>
         <div class='second'>
-            <div>Welcome: {{student_obj.name}}</div>
+            <div style="width: 443px; max-width: 443px; display:inline-block;
+       ">Welcome: {{student_obj.name}}</div>
+            <button style="margin-left: 56vw; display: inline-block; background-color: white; border-radius: 20px; color: darkslategray; font-size: 20px;" onclick="location.href='http://127.0.0.1:8000/studentlogin'">Log Out</button>
+            <!-- <div style="display: inline; padding-left: 75vw; margin-bottom: 10vh;"><button>Log Out</button></div> -->
             <!-- My Courses -->
         </div>
         <ins><h1 style="color:darkslategray; padding-left: 110px; font-family:Georgia, 'Times New Roman', Times, serif">My Courses</h1></ins>
