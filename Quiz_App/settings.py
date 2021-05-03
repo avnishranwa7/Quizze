@@ -22,12 +22,12 @@ STATIC_URL = '/static/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'js35&#pawur#1(znr%w_p5i+6^@e#h49ev-5ku*3fzs7%!xp)z'
-
+# SECRET_KEY = 'js35&#pawur#1(znr%w_p5i+6^@e#h49ev-5ku*3fzs7%!xp)z'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'js35&#pawur#1(znr%w_p5i+6^@e#h49ev-5ku*3fzs7%!xp)z')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+# DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 ALLOWED_HOSTS = []
 
 
