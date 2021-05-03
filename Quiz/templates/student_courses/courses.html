@@ -8,22 +8,34 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <title>My Courses</title>
+        <script>
+          function goToQuizzes(Course_ID, RollNo){
+            window.location.href = "{% url 'Quizzes' %}" + "?course_id="+Course_ID + "&rollno="+RollNo;
+          }
+          function logOut(){
+            window.location.href = "{% url 'student_login' %}";
+          }
+          function Courses(RollNo){
+            window.location.href = "rollno="+RollNo;
+          }
+        </script>
         <style>
           a:hover{
-            text-decoration:none;
+            text-decoration: none;
+            cursor: pointer;
           }
         </style>
     </head>
     <body>
         {% csrf_token %}
         <div class='first'>
-          <a href = 'http://127.0.0.1:8000/courses/{{rollno}}'><h1 style="color: darkslategray;">Quizze</h1></a>
+          <a onclick="Courses({{rollno}})"><h1 style="color: darkslategray;">Quizze</h1></a>
             <p>THE WORLD'S FAVOURITE QUIZ SITE</p>
         </div>
         <div class='second'>
             <div style="width: 443px; max-width: 443px; display:inline-block;
        ">Welcome: {{student_obj.name}}</div>
-            <button style="margin-left: 56vw; display: inline-block; background-color: white; border-radius: 20px; color: darkslategray; font-size: 20px;" onclick="location.href='http://127.0.0.1:8000/studentlogin'">Log Out</button>
+            <button style="margin-left: 56vw; display: inline-block; background-color: white; border-radius: 20px; color: darkslategray; font-size: 20px;" onclick="logOut()">Log Out</button>
             <!-- <div style="display: inline; padding-left: 75vw; margin-bottom: 10vh;"><button>Log Out</button></div> -->
             <!-- My Courses -->
         </div>
@@ -40,7 +52,7 @@
                 <div id="collapse{{forloop.counter}}" class="panel-collapse collapse in">
                   <div class="panel-body" style="font-size: 18px;">
                     {{i.Course_ID.Course_Name}}
-                    <button class = "btn success" onclick="location.href = 'http://127.0.0.1:8000/quizzes/{{i.Course_ID}}/{{student_obj.RollNo}}' ">Show Quiz</button>
+                    <button class = "btn success" onclick="goToQuizzes('{{i.Course_ID}}', '{{student_obj.RollNo}}')">Show Quiz</button>
                   </div>
                 </div>
               </div>

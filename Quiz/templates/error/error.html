@@ -22,7 +22,17 @@
 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
-
+	<script>
+		function back(course, rollno){
+			window.location.href = "{% url 'Quizzes' %}" + "?course_id="+course + "&rollno="+rollno;
+		}
+	</script>
+	<style>
+		a:hover{
+			text-decoration: none;
+			cursor: pointer;
+		}
+	</style>
 </head>
 
 <body>
@@ -34,7 +44,7 @@
 				<h2>OOPS</h2>
 			</div>
 			<h2>You have not given this Quiz</h2>
-			<a href="http://127.0.0.1:8000/quizzes/{{course}}/{{rollno}}">Back</a>
+			<a onclick="back('{{course}}', '{{rollno}}')">Back</a>
 		</div>
 	</div>
 

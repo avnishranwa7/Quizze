@@ -4,14 +4,14 @@ from Quiz import views
 
 urlpatterns = [
     path('', views.homepage, name="Home"),
-    path('test/<str:rollno>/<str:quiz_id>/<str:time>', views.TestView),
-    path('teacher_register/', views.TeacherInsertData),
+    path('test', views.TestView, name='Test'),
+    path('teacher_register/', views.TeacherInsertData, name='teacher_register'),
     path('admin/', views.Admin, name="Admin"),
-    path('courses/<str:rollno>', views.Courses, name='Courses'),
-    path('quizzes/<str:Course_ID>/<str:rollno>', views.Quizzes),
-    path('result/<str:rollno>/<str:quiz_id>', views.results),
-    path('studentlogin', views.Studentlogin),
+    path('courses/rollno=<str:rollno>', views.Courses, name='Courses'),
+    path('quizzes', views.Quizzes, name='Quizzes'),
+    path('result', views.results, name='Result'),
+    path('studentlogin', views.Studentlogin, name='student_login'),
     path('home', views.homepage),
-    path('signup', views.StudentInsertData),
+    path('signup', views.StudentInsertData, name='signup'),
     # path('questions/<str:quiz_id>/<str:rollno>', views.Question),
 ]

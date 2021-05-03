@@ -41,19 +41,43 @@
             end_time = end_time.slice(0, l-4) + 'pm';
           }
           var newdate = new Date(date+' '+end_time);
-          return Math.min(newdate, countDownDate);
+          document.getElementById('hidden').value =  Math.min(newdate, countDownDate);
+          
+        }
+      </script>
+      <script>
+        function logOut(){
+          window.location.href = "{% url 'student_login' %}";
+        }
+        
+        function Test(rollno, quiz_id){
+          var T = document.getElementById('hidden').value
+          T = parseInt(T)
+          console.log(typeof(T))
+          window.location.href = "{% url 'Test' %}"+"?rollno="+rollno+"&quiz_id="+quiz_id+"&T="+document.getElementById('hidden').value;
+        }
+        
+        function Courses(RollNo){
+            window.location.href = "courses/rollno="+RollNo;
+        }
+
+        function Result(rollno, quiz_id){
+          window.location.href = "{% url 'Result' %}"+"?rollno="+rollno+"&quiz_id="+quiz_id;
         }
       </script>
       <style>
         a:hover{
           text-decoration:none;
+          cursor: pointer;
         }
       </style>
+      
     </head>
     <body>
         {% csrf_token %}
+        <input type='hidden' value=0 id = 'hidden'>
         <div class='first' style="color: darkslategray;">
-            <a href = 'http://127.0.0.1:8000/courses/{{rollno}}'><h1 style="color: darkslategray;">Quizze</h1></a>
+            <a onclick="Courses({{rollno}})"><h1 style="color: darkslategray;">Quizze</h1></a>
             <p>THE WORLD'S FAVOURITE QUIZ SITE</p>
         </div>
         <div class='second'>
@@ -80,13 +104,13 @@
                     <br>
                     Duration: {{i.0.duration}}
                     {% ifequal i.1 'active' %}
-                    <button class = "btn success"  onclick="location.href = 'http://127.0.0.1:8000/test/{{rollno}}/{{i.0.quiz_id}}/'+endtime({{i.0.duration}},'{{i.0.end_time}}', '{{i.0.date}}') ">Take Quiz</button>
+                    <button class = "btn success" onclick="endtime({{i.0.duration}},'{{i.0.end_time}}', '{{i.0.date}}'); Test({{rollno}}, {{i.0.quiz_id}}); Test({{rollno}}, {{i.0.quiz_id}})">Take Quiz</button>
                     {% endifequal %}
                     {% ifequal i.1 'locked' %}
                     <button class = "btn success">Quiz Locked</button>
                     {% endifequal %}
                     {% ifequal i.1 'over' %}
-                    <button class = "btn success" onclick="location.href = 'http://127.0.0.1:8000/result/{{rollno}}/{{i.0.quiz_id}}'">Check Result</button>
+                    <button class = "btn success" onclick=" Result({{rollno}}, {{i.0.quiz_id}}) ">Check Result</button>
                     {% endifequal %}
                   </div>
                 </div>

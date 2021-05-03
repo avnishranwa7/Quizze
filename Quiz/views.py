@@ -14,7 +14,6 @@ import datetime
 from django.http import HttpResponse
 
 
-
 def homepage(request):
     return render(request, 'home\home.html')
 
@@ -38,7 +37,7 @@ def Studentlogin(request):
         if len(myresult) == 0:
             messages.error(request, "Invalid Username/Password")
         else:
-            return redirect('http://127.0.0.1:8000/courses/'+RollNo)
+            return redirect('courses/rollno='+RollNo)
     return render(request, "Login_v1\index.html")
 
 def Home(request):
@@ -50,7 +49,9 @@ def Courses(request, rollno):
     con = {'course': course, 'student_obj': student_obj, 'rollno': rollno}
     return render(request, "student_courses\courses.html", con)
 
-def Quizzes(request, Course_ID, rollno):
+def Quizzes(request):
+    Course_ID = request.GET.get('course_id')
+    rollno = request.GET.get('rollno')
     quiz = Quiz.objects.all().filter(Course_ID = Course_ID)
     bool_list = []
     mydb = mysql.connector.connect(
@@ -82,7 +83,10 @@ def Quizzes(request, Course_ID, rollno):
 def Add_Data(RollNo, q_id, response):
     responses.objects.create(RollNo = RollNo, q_id = q_id, response = response)
 
-def TestView(request, quiz_id, rollno, time):
+def TestView(request):
+    quiz_id = request.GET.get('quiz_id')
+    rollno = request.GET.get('rollno')
+    time = request.GET.get('T')
     ques = Questions.objects.all().filter(quiz_id = quiz_id)
     quiz_obj = Quiz.objects.get(quiz_id = quiz_id)
     l = len(ques)
@@ -105,21 +109,24 @@ def TestView(request, quiz_id, rollno, time):
                 instance.delete()
                 
             marks_object = marks_db.objects.create(RollNo = s, quiz_id = quiz_obj, marks = mark)
-            return redirect('http://127.0.0.1:8000/quizzes/{}/{}'.format(quiz_obj.Course_ID, rollno))
+            return Courses(request, rollno)
 
         
     form = QuestionFormSet()
     return render(request, 'test.html', {'form_ques': zip(list(form), list(ques)), 'form': form, 'quiz_obj': quiz_obj, 
     'time': json.dumps(time)})
 
-def results(request, rollno, quiz_id):
+def results(request):
+    rollno = request.GET.get('rollno')
+    quiz_id = request.GET.get('quiz_id')
     marks_obj = marks_db.objects.all().filter(RollNo = rollno, quiz_id=quiz_id).first()
     ques = Questions.objects.all().filter(quiz_id = quiz_id)
+    print(marks_obj)
     response_list = []
     for i in ques:
         response_list.append(responses.objects.all().filter(RollNo = rollno, q_id = i.q_id).first().response)
     quiz_obj = Quiz.objects.get(quiz_id = quiz_id)
-    if marks_obj:
+    if marks_obj is not None:
         return render(request, 'results.html', {'quiz_obj': quiz_obj, 'marks':marks_obj.marks, 'ques': zip(ques, response_list), 'course': quiz_obj.Course_ID, 'rollno': rollno})
     else:
         return render(request, 'error\error.html', {'course': quiz_obj.Course_ID, 'rollno': rollno})
