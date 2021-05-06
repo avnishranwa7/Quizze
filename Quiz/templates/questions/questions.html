@@ -1,0 +1,104 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="icon" type="image/png" href="{% static '/templates/home/assets/images/favicon2.png' %}">
+        <link rel="stylesheet" href="{% static 'templates/quizzes/css/quizzes.css' %}"> 
+        <link rel="stylesheet" href="{% static 'templates/questions/css/questions.css' %}"> 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script>
+            function hello(id, value) {
+                var x = "id_form-"+id.toString()+"-response";
+                document.getElementById(x).value = value;
+            }
+        </script>
+        <style>
+            label.radio input:hover+span {
+                border-color: darkslategray;
+                background-color: rgb(113, 189, 189);
+                color: #fff
+            }
+        </style>
+    </head>
+    <body>
+        <div class='first' style="color: darkslategray;">
+            <h1 style="color: darkslategray;">{{quiz_obj.quiz_name}}</h1>
+            <p>ALL THE BEST</p>
+        </div>
+        <div class='second'>
+            <div style="color: white;">Questions</div>
+        </div>
+        
+        <div class="container mt-5">
+            <div class="d-flex justify-content-center row">
+                <div class="col-md-10 col-lg-10">
+                    <div class="border">
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="d-flex flex-row justify-content-between align-items-center mcq">
+                                <h4>MCQ Quiz</h4>
+                            </div>
+                        </div>
+                        <form method="POST">
+                            
+                        {% csrf_token %}
+                        {{form.management_form}}
+                        {% for i,j in form_ques %}
+                        <!-- <div class="d-flex flex-row align-items-center question-title">
+                            <h3 style="color: darkslategray;">Q{{forloop.counter}}.&nbsp;</h3>
+                            <h3 style="color: darkslategray;">{{i.question}}</h5>
+                        </div> -->
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="d-flex flex-row align-items-center question-title">
+                                <h3 style="color: darkslategray;">Q{{forloop.counter}}.&nbsp;</h3>
+                                <h3 style="color: darkslategray;">{{j.question}}</h5>
+                            </div>
+                            {% if j.opt1 %}
+                            <div class="ans ml-2">
+                                <label class="radio"> <input type="radio" name = {{forloop.counter0}} onclick = "hello(this.id, this.value)" id={{forloop.counter0}} value = "A" style="background-color: darkslategray;"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{j.opt1}}</span>
+                                </label>
+                            </div>
+                            {% endif %}
+                            {% if j.opt2 %}
+                            <div class="ans ml-2">
+                                <label class="radio"> <input type="radio" name = {{forloop.counter0}} onclick = "hello(this.id, this.value)" id={{forloop.counter0}} value = "B" style="background-color: darkslategray;"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{j.opt2}}</span>
+                                </label>
+                            </div>
+                            {% endif %}
+                            {% if j.opt3 %}
+                            <div class="ans ml-2">
+                                <label class="radio"> <input type="radio" name = {{forloop.counter0}} onclick = "hello(this.id, this.value)" id={{forloop.counter0}} value = "C" style="background-color: darkslategray;"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{j.opt3}}</span>
+                                </label>
+                            </div>
+                            {% endif %}
+                            {% if j.opt4 %}
+                            <div class="ans ml-2">
+                                <label class="radio"> <input type="radio" name = {{forloop.counter0}} onclick = "hello(this.id, this.value)" id={{forloop.counter0}} value = "D" style="background-color: darkslategray;"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{j.opt4}}</span>
+                                </label>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- <div class="ans ml-2"></div>
+                        <input type="radio" name = {{forloop.counter0}} onclick = "hello(this.id, this.value)" id={{forloop.counter0}} value = "A">{{j.opt1}}
+                        <br>
+                        <input type="radio" name = {{forloop.counter0}} onclick = "hello(this.id, this.value)" id={{forloop.counter0}} value = "B">{{j.opt2}}
+                        <br>
+                        <input type="radio" name = {{forloop.counter0}} onclick = "hello(this.id, this.value)" id={{forloop.counter0}} value = "C">{{j.opt3}}
+                        <br>
+                        <input type="radio" name = {{forloop.counter0}} onclick = "hello(this.id, this.value)" id={{forloop.counter0}} value = "D">{{j.opt4}}
+                        <br> -->
+                        {{i.response.as_hidden}}
+                        
+                        {% endfor %}
+                        
+                        <button type="submit" class="btn btn-primary btn-sm" style="margin-right: 27vw; background-color: darkslategray; width: 7vw; font-size: medium;">Submit</button>
+                        
+                        <br>
+                        </form>
+    </body>
+</html>

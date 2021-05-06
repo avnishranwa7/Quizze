@@ -3,8 +3,8 @@
     <head>
         <title>Result</title>
         <link rel="icon" type="image/png" href="{% static '/templates/home/assets/images/favicon2.png' %}">
-        <link rel="stylesheet" href="{% static 'templates/quizzes/css/quizzes.css' %}"> 
-        <link rel="stylesheet" href="{% static 'templates/questions/css/questions.css' %}"> 
+        <link rel="stylesheet" href="{% static 'templates/quizzes/css/quizzes2.css' %}"> 
+        <link rel="stylesheet" href="{% static 'templates/questions/css/new.css' %}"> 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -12,17 +12,37 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-        
+        <script>
+            function back(course, rollno){
+                window.location.href = "{% url 'Quizzes' %}" + "?course_id="+course + "&rollno="+rollno;
+            }
+        </script>
+        <style>
+            .btn:hover{
+            color: #2A265F;
+            background-color: white;
+        }
+        .btn {
+	background-color: #2A265F;
+	border: 0;
+	border-radius: 50px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	color: #fff;
+	font-size: 16px;
+	padding: 12px 25px;
+	letter-spacing: 1px;
+}
+        </style>
     </head>
     <body>
-        <div class='first' style="color: darkslategray;">
-            <h1 style="color: darkslategray;">{{quiz_obj.quiz_name}}</h1>
+        <div class='first' style="color: #2A265F;">
+            <h1 style="color: #2A265F;">{{quiz_obj.quiz_name}}</h1>
         </div>
         <div class='second'>
             <div style="color: white;">Question Responses</div>
         </div>
         <div class="panel-body" style="font-size: 18px;">
-            <button class = "btn success" style="margin-right: 95%;" onclick="location.href = 'http://127.0.0.1:8000/quizzes/{{course}}/{{rollno}}'">Back</button>
+            <button class = "btn" style="margin-right: 93%;" onclick="back('{{course}}', '{{rollno}}')">Back</button>
         </div>
         <div class="container mt-5">
             <div class="d-flex justify-content-center row">
@@ -30,7 +50,7 @@
                     <div class="border">
                         <div class="question bg-white p-3 border-bottom">
                             <div class="d-flex flex-row justify-content-between align-items-center mcq">
-                                <h2 style="color: darkslategrey; padding-left: 25vw;"><strong>Marks: {{marks}}</strong></h2>
+                                <h2 style="color: #2A265F; padding-left: 25vw;"><strong>Marks: {{marks}}</strong></h2>
                             </div>
                         </div>
                         
@@ -39,22 +59,22 @@
                         {% csrf_token %}
                         {% for q,r in ques %}
                         <!-- <div class="d-flex flex-row align-items-center question-title">
-                            <h3 style="color: darkslategray;">Q{{forloop.counter}}.&nbsp;</h3>
-                            <h3 style="color: darkslategray;">{{i.question}}</h5>
+                            <h3 style="color: #2A265F;">Q{{forloop.counter}}.&nbsp;</h3>
+                            <h3 style="color: #2A265F;">{{i.question}}</h5>
                         </div> -->
                         <div class="question bg-white p-3 border-bottom">
                             <div class="d-flex flex-row align-items-center question-title">
-                                <h3 style="color: darkslategray;">Q{{forloop.counter}}.&nbsp;</h3>
-                                <h3 style="color: darkslategray;">{{q.question}}</h5>
+                                <h3 style="color: #2A265F;">Q{{forloop.counter}}.&nbsp;</h3>
+                                <h3 style="color: #2A265F;">{{q.question}}</h5>
                             </div>
                             {% if q.ans == 'A' %}
                             <div class="ans ml-2">
-                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw; background-color: rgb(16, 236, 27);">{{q.opt1}}</span>
+                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{q.opt1}}&emsp;<i class="fa fa-check fa-lg" aria-hidden="true" style="color: green;"></i></span>
                                 </label>
                             </div>
                             {% elif r == 'A' %}
                             <div class="ans ml-2">
-                                <label class="radio"> <span style="color: white;width: 100%; text-align: left; padding-left: 0.5vw; background-color: rgb(216, 70, 13);">{{q.opt1}}</span>
+                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{q.opt1}}&emsp;<i class="fa fa-times fa-lg" aria-hidden="true" style="color: red;"></i></span>
                                 </label>
                             </div>
                             {% else %}
@@ -65,12 +85,12 @@
                             {% endif %}
                             {% if q.ans == 'B' %}
                             <div class="ans ml-2">
-                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw; background-color: rgb(16, 236, 27);">{{q.opt2}}</span>
+                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{q.opt2}}&emsp;<i class="fa fa-check fa-lg" aria-hidden="true" style="color: green;"></i></span>
                                 </label>
                             </div>
                             {% elif r == 'B' %}
                             <div class="ans ml-2">
-                                <label class="radio"> <span style="color: white;width: 100%; text-align: left; padding-left: 0.5vw; background-color: rgb(216, 70, 13);">{{q.opt2}}</span>
+                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{q.opt2}}&emsp;<i class="fa fa-times fa-lg" aria-hidden="true" style='color: red;'></i></span>
                                 </label>
                             </div>
                             {% else %}
@@ -83,12 +103,12 @@
                             {% if q.opt3 %}
                             {% if q.ans == 'C' %}
                             <div class="ans ml-2">
-                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw; background-color: rgb(16, 236, 27);">{{q.opt3}}</span>
+                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{q.opt3}}&emsp;<i class="fa fa-check fa-lg" aria-hidden="true" style="color: green;"></i></span>
                                 </label>
                             </div>
                             {% elif r == 'C' %}
                             <div class="ans ml-2">
-                                <label class="radio"> <span style="color: white;width: 100%; text-align: left; padding-left: 0.5vw; background-color: rgb(216, 70, 13);">{{q.opt3}}</span>
+                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{q.opt3}}&emsp;<i class="fa fa-times fa-lg" aria-hidden="true" style="color: red;"></i></span>
                                 </label>
                             </div>
                             {% else %}
@@ -101,12 +121,12 @@
                             {% if q.opt4 %}
                             {% if q.ans == 'D' %}
                             <div class="ans ml-2">
-                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw; background-color: rgb(16, 236, 27);">{{q.opt4}}</span>
+                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{q.opt4}}&emsp;<i class="fa fa-check fa-lg" aria-hidden="true" style="color: green;"></i></span>
                                 </label>
                             </div>
                             {% elif r == 'D' %}
                             <div class="ans ml-2">
-                                <label class="radio"> <span style="color: white;width: 100%; text-align: left; padding-left: 0.5vw; background-color: rgb(216, 70, 13);">{{q.opt4}}</span>
+                                <label class="radio"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{q.opt4}}&emsp;<i class="fa fa-times fa-lg" aria-hidden="true" style="color: red;"></i></span>
                                 </label>
                             </div>
                             {% else %}

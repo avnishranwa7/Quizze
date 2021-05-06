@@ -2,8 +2,8 @@
 <html>
     <head>
         <title>Quiz</title>
-        <link rel="stylesheet" href="{% static 'templates/quizzes/css/quizzes.css' %}"> 
-        <link rel="stylesheet" href="{% static 'templates/questions/css/questions.css' %}"> 
+        <link rel="stylesheet" href="{% static 'templates/quizzes/css/quizzes2.css' %}"> 
+        <link rel="stylesheet" href="{% static 'templates/questions/css/new.css' %}"> 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -33,11 +33,32 @@
                 window.history.forward();
             }
         </script>
-
+        <style>
+            .first h1{
+      font-size: 50px;
+      padding-left: 10px;
+      display: inline;
+  }
+  
+  .first p{
+          display: inline;
+          font-size: 18px;
+          padding-left: 800px;
+          font-family: 'Courier New', Courier, monospace;
+  }
+  
+  .second{
+          background-color: #2A265F;
+          font-size: 25px;
+          padding-left: 15px;
+          margin-top: 10px;
+  }
+        </style>
         <script>
             // Set the date we're counting down to
             
             countDownDate = {{time|safe}};
+            console.log(countDownDate);
             // advance_time.setMinutes(time.getMinutes() + duration);
             // console.log(advance_time);
             // console.log(countDownDate);
@@ -76,22 +97,26 @@
             </script>
         <style>
             label.radio input:hover+span {
-                border-color: darkslategray;
-                background-color: rgb(113, 189, 189);
-                color: #fff
+                border-color: #2A265F;
+                background-color: #7175da;
+                color: #fff;
+            }
+            input[type='radio']:checked+span:after{
+                background-color: #2A265F;
             }
         </style>
+        
     </head>
     <body>
         <!-- <input type="text" id="time" value="16" name="time"> -->
-        <div class='first' style="color: darkslategray;">
-            <h1 style="color: darkslategray;">{{quiz_obj.quiz_name}}</h1>
+        <div class='first' style="color: #2A265F;">
+            <h1 style="color: #2A265F;">{{quiz_obj.quiz_name}}</h1>
             <p>ALL THE BEST</p>
         </div>
         <div class='second'>
             <div style="color: white;">Questions</div>
         </div>
-        <div style="font-size: 50px; display: inline-block; width: 15vw; height: 10vh; position: fixed; border: 3px solid darkslategray;
+        <div style="font-size: 50px; display: inline-block; width: 15vw; height: 10vh; position: fixed; border: 3px solid #2A265F;
         border-radius: 10px; outline-offset: 30px;">
         <p id="demo"></p></div>
         <div class="container mt-5" style="display: inline-block; margin-left: 9vw;">
@@ -108,36 +133,33 @@
                         {% csrf_token %}
                         {{form.management_form}}
                         {% for i,j in form_ques %}
-                        <!-- <div class="d-flex flex-row align-items-center question-title">
-                            <h3 style="color: darkslategray;">Q{{forloop.counter}}.&nbsp;</h3>
-                            <h3 style="color: darkslategray;">{{i.question}}</h5>
-                        </div> -->
+                        
                         <div class="question bg-white p-3 border-bottom">
                             <div class="d-flex flex-row align-items-center question-title">
-                                <h3 style="color: darkslategray;">Q{{forloop.counter}}.&nbsp;</h3>
-                                <h3 style="color: darkslategray;">{{j.question}}</h5>
+                                <h3 style="color: #2A265F;">Q{{forloop.counter}}.&nbsp;</h3>
+                                <h3 style="color: #2A265F;">{{j.question}}</h5>
                             </div>
                             {% if j.opt1 %}
                             <div class="ans ml-2">
-                                <label class="radio"> <input type="radio" name = {{forloop.counter0}} onclick = "hello(this.id, this.value)" id={{forloop.counter0}} value = "A" style="background-color: darkslategray;"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{j.opt1}}</span>
+                                <label class="radio"> <input type="radio" name = {{forloop.counter0}} onclick = "hello(this.id, this.value)" id={{forloop.counter0}} value = "A" style="background-color: #2A265F;"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{j.opt1}}</span>
                                 </label>
                             </div>
                             {% endif %}
                             {% if j.opt2 %}
                             <div class="ans ml-2">
-                                <label class="radio"> <input type="radio" name = {{forloop.counter0}} onclick = "hello(this.id, this.value)" id={{forloop.counter0}} value = "B" style="background-color: darkslategray;"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{j.opt2}}</span>
+                                <label class="radio"> <input type="radio" name = {{forloop.counter0}} onclick = "hello(this.id, this.value)" id={{forloop.counter0}} value = "B" style="background-color: #2A265F;"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{j.opt2}}</span>
                                 </label>
                             </div>
                             {% endif %}
                             {% if j.opt3 %}
                             <div class="ans ml-2">
-                                <label class="radio"> <input type="radio" name = {{forloop.counter0}} onclick = "hello(this.id, this.value)" id={{forloop.counter0}} value = "C" style="background-color: darkslategray;"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{j.opt3}}</span>
+                                <label class="radio"> <input type="radio" name = {{forloop.counter0}} onclick = "hello(this.id, this.value)" id={{forloop.counter0}} value = "C" style="background-color: #2A265F;"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{j.opt3}}</span>
                                 </label>
                             </div>
                             {% endif %}
                             {% if j.opt4 %}
                             <div class="ans ml-2">
-                                <label class="radio"> <input type="radio" name = {{forloop.counter0}} onclick = "hello(this.id, this.value)" id={{forloop.counter0}} value = "D" style="background-color: darkslategray;"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{j.opt4}}</span>
+                                <label class="radio"> <input type="radio" name = {{forloop.counter0}} onclick = "hello(this.id, this.value)" id={{forloop.counter0}} value = "D" style="background-color: #2A265F;"> <span style="width: 100%; text-align: left; padding-left: 0.5vw;">{{j.opt4}}</span>
                                 </label>
                             </div>
                             {% endif %}
@@ -156,7 +178,7 @@
                         
                         {% endfor %}
                         
-                        <button id="submit" type="submit" class="btn btn-primary btn-sm" style="margin-right: 29vw; background-color: darkslategray; width: 7vw; font-size: medium;">Submit</button>
+                        <button id="submit" type="submit" class="btn btn-primary btn-sm" style="margin-right: 29vw; background-color: #2A265F; width: 7vw; font-size: medium;">Submit</button>
                         
                         <br>
                         </form>

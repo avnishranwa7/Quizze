@@ -12,7 +12,7 @@
 }
 
 .second{
-        background-color: darkslategray;
+        background-color: #2A265F;
         font-size: 25px;
         padding-left: 15px;
         margin-top: 10px;
@@ -29,11 +29,12 @@
 }
 
 .success {
-        border-color: #4CAF50;
-        color: green;
+        border-color: #2A265F;
+        color: #2A265F;
 }
       
 .success:hover {
-        background-color: #4CAF50;
+        background-color: #7175da;
         color: white;
 }
+

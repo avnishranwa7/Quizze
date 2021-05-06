@@ -47,7 +47,7 @@ def Courses(request, rollno):
     course = enrolled.objects.all().filter(RollNo = rollno)
     student_obj = Student_data_insert.objects.all().filter(RollNo = rollno).first()
     con = {'course': course, 'student_obj': student_obj, 'rollno': rollno}
-    return render(request, "student_courses\courses.html", con)
+    return render(request, "student_courses\courses2.html", con)
 
 def Quizzes(request):
     Course_ID = request.GET.get('course_id')
@@ -78,7 +78,7 @@ def Quizzes(request):
             bool_list.append((i, "locked"))
         
     con = {'bool': bool_list, 'rollno': rollno}
-    return render(request, "quizzes\quizzes.html", con)
+    return render(request, "quizzes\quizzes2.html", con)
 
 def Add_Data(RollNo, q_id, response):
     responses.objects.create(RollNo = RollNo, q_id = q_id, response = response)
@@ -86,7 +86,8 @@ def Add_Data(RollNo, q_id, response):
 def TestView(request):
     quiz_id = request.GET.get('quiz_id')
     rollno = request.GET.get('rollno')
-    time = request.GET.get('T')
+    time = request.GET.get('t_id')
+    print(time)
     ques = Questions.objects.all().filter(quiz_id = quiz_id)
     quiz_obj = Quiz.objects.get(quiz_id = quiz_id)
     l = len(ques)
@@ -109,7 +110,11 @@ def TestView(request):
                 instance.delete()
                 
             marks_object = marks_db.objects.create(RollNo = s, quiz_id = quiz_obj, marks = mark)
-            return Courses(request, rollno)
+            if not request.GET._mutable:
+                request.GET._mutable = True
+            request.GET['course_id']=quiz_obj.Course_ID
+            request.GET['rollno']=rollno
+            return Quizzes(request)
 
         
     form = QuestionFormSet()
@@ -121,12 +126,11 @@ def results(request):
     quiz_id = request.GET.get('quiz_id')
     marks_obj = marks_db.objects.all().filter(RollNo = rollno, quiz_id=quiz_id).first()
     ques = Questions.objects.all().filter(quiz_id = quiz_id)
-    print(marks_obj)
     response_list = []
-    for i in ques:
-        response_list.append(responses.objects.all().filter(RollNo = rollno, q_id = i.q_id).first().response)
     quiz_obj = Quiz.objects.get(quiz_id = quiz_id)
     if marks_obj is not None:
+        for i in ques:
+            response_list.append(responses.objects.all().filter(RollNo = rollno, q_id = i.q_id).first().response)
         return render(request, 'results.html', {'quiz_obj': quiz_obj, 'marks':marks_obj.marks, 'ques': zip(ques, response_list), 'course': quiz_obj.Course_ID, 'rollno': rollno})
     else:
         return render(request, 'error\error.html', {'course': quiz_obj.Course_ID, 'rollno': rollno})

@@ -1,0 +1,397 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+      <link rel="icon" type="image/png" href="{% static '/templates/home/assets/images/favicon2.png' %}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <title>My Courses</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+* {
+	box-sizing: border-box;
+}
+
+.btn:hover{
+    color: #2A265F;
+    background-color: white;
+}
+
+body {
+    /* background-image: linear-gradient(45deg, #7175da, #9790F2); */
+    font-family: 'Muli', sans-serif;
+}
+
+.all{
+    
+	font-family: 'Muli', sans-serif;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	min-height: 70vh;
+	margin: 0;
+}
+
+.courses-container {
+	
+}
+
+.course {
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	display: flex;
+	max-width: 100%;
+	margin: 20px;
+	overflow: hidden;
+	width: 700px;
+}
+
+.course h6 {
+	opacity: 0.6;
+	margin: 0;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+.course h2 {
+	letter-spacing: 1px;
+	margin: 10px 0;
+}
+
+.course-preview {
+	background-color: #2A265F;
+	color: #fff;
+	padding: 30px;
+	max-width: 250px;
+}
+
+.course-preview p {
+	color: #fff;
+	display: inline-block;
+	font-size: 12px;
+	opacity: 0.6;
+	margin-top: 30px;
+	text-decoration: none;
+}
+
+.course-info {
+	padding: 30px;
+	position: relative;
+	width: 100%;
+}
+
+.progress-container {
+	position: absolute;
+	top: 30px;
+	right: 30px;
+	text-align: right;
+	width: 150px;
+}
+
+.progress {
+	background-color: #ddd;
+	border-radius: 3px;
+	height: 5px;
+	width: 100%;
+}
+
+.progress::after {
+	border-radius: 3px;
+	background-color: #2A265F;
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 5px;
+	width: 66%;
+}
+
+.progress-text {
+	font-size: 10px;
+	opacity: 0.6;
+	letter-spacing: 1px;
+}
+
+.btn {
+	background-color: #2A265F;
+	border: 0;
+	border-radius: 50px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	color: #fff;
+	font-size: 16px;
+	padding: 12px 25px;
+	position: absolute;
+	bottom: 30px;
+	right: 30px;
+	letter-spacing: 1px;
+}
+
+/* SOCIAL PANEL CSS */
+.social-panel-container {
+	position: fixed;
+	right: 0;
+	bottom: 80px;
+	transform: translateX(100%);
+	transition: transform 0.4s ease-in-out;
+}
+
+.social-panel-container.visible {
+	transform: translateX(-10px);
+}
+
+.social-panel {	
+	background-color: #fff;
+	border-radius: 16px;
+	box-shadow: 0 16px 31px -17px rgba(0,31,97,0.6);
+	border: 5px solid #001F61;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-family: 'Muli';
+	position: relative;
+	height: 169px;	
+	width: 370px;
+	max-width: calc(100% - 10px);
+}
+
+.social-panel button.close-btn {
+	border: 0;
+	color: #97A5CE;
+	cursor: pointer;
+	font-size: 20px;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.social-panel button.close-btn:focus {
+	outline: none;
+}
+
+.social-panel p {
+	background-color: #001F61;
+	border-radius: 0 0 10px 10px;
+	color: #fff;
+	font-size: 14px;
+	line-height: 18px;
+	padding: 2px 17px 6px;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	margin: 0;
+	transform: translateX(-50%);
+	text-align: center;
+	width: 235px;
+}
+
+.social-panel p i {
+	margin: 0 5px;
+}
+
+.social-panel p a {
+	color: #FF7500;
+	text-decoration: none;
+}
+
+.social-panel h4 {
+	margin: 20px 0;
+	color: #97A5CE;	
+	font-family: 'Muli';	
+	font-size: 14px;	
+	line-height: 18px;
+	text-transform: uppercase;
+}
+
+.social-panel ul {
+	display: flex;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.social-panel ul li {
+	margin: 0 10px;
+}
+
+.social-panel ul li a {
+	border: 1px solid #DCE1F2;
+	border-radius: 50%;
+	color: #001F61;
+	font-size: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+	width: 50px;
+	text-decoration: none;
+}
+
+
+
+.floating-btn {
+	border-radius: 26.5px;
+	background-color: #001F61;
+	border: 1px solid #001F61;
+	box-shadow: 0 16px 22px -17px #03153B;
+	color: #fff;
+	cursor: pointer;
+	font-size: 16px;
+	line-height: 20px;
+	padding: 12px 20px;
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	z-index: 999;
+}
+
+
+
+.floating-btn:focus {
+	outline: none;
+}
+
+.floating-text {
+	background-color: #001F61;
+	border-radius: 10px 10px 0 0;
+	color: #fff;
+	font-family: 'Muli';
+	padding: 7px 15px;
+	position: fixed;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	text-align: center;
+	z-index: 998;
+}
+
+.floating-text a {
+	color: #FF7500;
+	text-decoration: none;
+}
+
+@media screen and (max-width: 480px) {
+
+	.social-panel-container.visible {
+		transform: translateX(0px);
+	}
+	
+	.floating-btn {
+		right: 10px;
+	}
+}
+        </style>
+        
+        <script>
+          function goToQuizzes(Course_ID, RollNo){
+            window.location.href = "{% url 'Quizzes' %}" + "?course_id="+Course_ID + "&rollno="+RollNo;
+          }
+          function logOut(){
+            window.location.href = "{% url 'student_login' %}";
+          }
+          function Courses(RollNo){
+            window.location.href = "rollno="+RollNo;
+          }
+        </script>
+        <style>
+          a:hover{
+            text-decoration: none;
+            cursor: pointer;
+          }
+        </style>
+        <style>
+            .first{
+    color: #2A265F
+}
+
+.first h1{
+    font-size: 50px;
+    padding-left: 10px;
+    display: inline;
+}
+
+.first p{
+    display: inline;
+    font-size: 18px;
+    padding-left: 800px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.second{
+    background-color: #2A265F;
+    font-size: 25px;
+    padding-left: 15px;
+    margin-top: 10px;
+    color: white;
+}
+
+.second div{
+    display: inline;
+    overflow: hidden;
+}
+
+.second p{
+    display: inline;
+}
+
+.second button{
+    display: inline;
+}
+        </style>
+        <script>
+            function goToQuizzes(Course_ID, RollNo){
+              window.location.href = "{% url 'Quizzes' %}" + "?course_id="+Course_ID + "&rollno="+RollNo;
+            }
+            function logOut(){
+              window.location.href = "{% url 'student_login' %}";
+            }
+            function Courses(RollNo){
+              window.location.href = "rollno="+RollNo;
+            }
+          </script>
+    </head>
+    <body>
+        {% csrf_token %}
+        <div class='first'>
+          <a onclick="Courses({{rollno}})"><h1 style="color: #2A265F;">Quizze</h1></a>
+            <p>THE WORLD'S FAVOURITE QUIZ SITE</p>
+        </div>
+        <div class='second'>
+            <div style="width: 443px; max-width: 443px; display:inline-block;
+       ">Welcome: {{student_obj.name}}</div>
+            <button style="margin-left: 56vw; display: inline-block; background-color: white; border-radius: 20px; color: darkslategray; font-size: 20px;" onclick="logOut()">Log Out</button>
+            <!-- <div style="display: inline; padding-left: 75vw; margin-bottom: 10vh;"><button>Log Out</button></div> -->
+            <!-- My Courses -->
+        </div>
+        <ins><h1 style="color:#2A265F; padding-left: 43vw; font-family:'Muli', sans-serif;">My Courses</h1></ins>
+        <div class="all">
+        {% for i in course %}
+        <div class="courses-container">
+            <div class="course">
+                <div class="course-preview">
+                    <h6>Course</h6>
+                    <h2>{{i.Course_ID}}</h2>
+                    <p style="color: #2A265F;">.<i class="fas fa-chevron-right"></i></p>
+                </div>
+                <div class="course-info">
+                    
+                    <h6>Course Name</h6>
+                    <h2>{{i.Course_ID.Course_Name}}</h2>
+                    <button class="btn" onclick="goToQuizzes('{{i.Course_ID}}', '{{student_obj.RollNo}}')">Show Quizzes</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SOCIAL PANEL HTML -->
+        
+        
+        
+        
+        {% endfor %}
+        </div>
+    </body>
+</html>
