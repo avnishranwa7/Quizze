@@ -7,7 +7,7 @@ Salient features of this platform includes:
 - Teachers can create courses and enroll registered students in them.
 - Teachers can create course-wise quizzes with mutiple-choice questions with upto four options.
 - Enrolled students can give quiz in the time frame set by teachers.
-- Results will be shown immediately after the quiz ends and will be emailed to both the teachers and students.
+- Results will be shown immediately after the quiz ends and can be accessed by both the teachers and students.
 ## [ER Model Description](https://github.com/avnishranwa7/Quiz/blob/main/ER%20Model%20Description)
 ER Diagram Description :
 -	If the teacher and student have an existing account then they can login otherwise they can register themselves and create their account.
