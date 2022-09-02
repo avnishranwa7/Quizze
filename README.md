@@ -12,7 +12,7 @@ Salient features of this platform includes:
 ER Diagram Description :
 -	If the teacher and student have an existing account then they can login otherwise they can register themselves and create their account.
 -	The users will have to setup their username and password.
--	The teacher enrolls the student to their respective sources.
+-	The teacher enrolls the student to their respective courses.
 -	The teacher can create quizzes and link it to their courses.
 -	Every quiz will have its unique ID.
 -	The students enrolled in a course can view details of upcoming and previous quizzes.
